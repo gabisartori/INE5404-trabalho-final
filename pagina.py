@@ -1,5 +1,5 @@
 class Pagina:
-    def __init__(self, titulo, texto, livro):
-        self.titulo = titulo
-        self.texto = texto
+    def __init__(self, numero, livro, texto):
+        self.numero = numero
         self.livro = livro
+        self.texto = texto

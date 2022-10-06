@@ -1,6 +1,6 @@
 class Visualizador:
-    def __init__(self, pagina_atual) -> None:
-        self.pagina_atual = pagina_atual
+    def __init__(self) -> None:
+        self.pagina_atual = 0
     
     def pagina_anterior(self):
         self.pagina_atual -= 1
@@ -12,4 +12,4 @@ class Visualizador:
         self.pagina_atual = pagina
     
     def editar_pagina(self, pagina, texto):
-        print("Página do que? ")
+        print("Página do que?")

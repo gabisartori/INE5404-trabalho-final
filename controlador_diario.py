@@ -1,5 +1,6 @@
 class ControladorDiario:
-    
+  
+#teste
     
     def buscar_pagina(self):
         pass

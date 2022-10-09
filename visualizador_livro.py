@@ -11,11 +11,56 @@ class VisualizadorLivro(Visualizador):
         self.controlador.conectar_livro(livro)
 
     def run(self):
+        def voltar_pagina(textbox):
+            if self.pagina_atual > 0:
+                self.pagina_anterior()
+                textbox["text"]=self.controlador.ler_pagina(self.get_pagina_atual()).texto
+            else:
+                aviso = tk.Label(self.root, text="Você está na primeira página", fg="red")
+                aviso.pack()
+                self.root.after(2000, aviso.destroy)
+
+        def avancar_pagina(textbox):
+            if self.pagina_atual <= len(self.controlador.livro)-2:
+                self.pagina_seguinte()
+                textbox["text"]=self.controlador.ler_pagina(self.get_pagina_atual()).texto
+            else:
+                aviso = tk.Label(self.root, text="Você está na última página", fg="red")
+                aviso.pack()
+                self.root.after(2000, aviso.destroy)
+
         pagina = self.controlador.ler_pagina(self.pagina_atual)
-        self.root.geometry("1000x1000")
+        self.root.geometry("1280x720")
         self.root.title(pagina.livro)
-        T = tk.Label(self.root, text=pagina.texto, width=500, height=500)
+        
+        T = tk.Label(
+            self.root,
+            text=pagina.livro,
+            font=("Arial", 20)
+        )
         T.pack()
+
+        texto = tk.Label(
+            self.root,
+            text=pagina.texto,
+            justify=tk.LEFT,
+            wraplength=800,
+            bg="white",
+            )
+        texto.pack()
+        
+        tk.Button(
+            self.root,
+            text="Anterior",
+            command= lambda: voltar_pagina(texto) 
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text="Seguinte",
+            command= lambda: avancar_pagina(texto)
+        ).pack()
+
         self.root.mainloop()
 
     def editar_pagina(self, pagina, texto):

@@ -43,6 +43,8 @@ class VisualizadorLivro(Visualizador):
         texto = tk.Label(
             self.root,
             text=pagina.texto,
+            height=20,
+            width=100,
             justify=tk.LEFT,
             wraplength=800,
             bg="white",
@@ -63,7 +65,7 @@ class VisualizadorLivro(Visualizador):
             text="Seguinte",
             command= lambda: avancar_pagina(texto)
         ).pack(in_=botoes, side=tk.RIGHT)
-        
+
         self.root.mainloop()
 
     def editar_pagina(self, pagina, texto):

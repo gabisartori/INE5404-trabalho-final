@@ -49,18 +49,21 @@ class VisualizadorLivro(Visualizador):
             )
         texto.pack()
         
+        botoes = tk.Frame(self.root)
+        botoes.pack()
+
         tk.Button(
             self.root,
             text="Anterior",
             command= lambda: voltar_pagina(texto) 
-        ).pack()
+        ).pack(in_=botoes, side=tk.LEFT)
 
         tk.Button(
             self.root,
             text="Seguinte",
             command= lambda: avancar_pagina(texto)
-        ).pack()
-
+        ).pack(in_=botoes, side=tk.RIGHT)
+        
         self.root.mainloop()
 
     def editar_pagina(self, pagina, texto):

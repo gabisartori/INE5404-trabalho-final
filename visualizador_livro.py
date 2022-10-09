@@ -10,11 +10,15 @@ class VisualizadorLivro(Visualizador):
         self.controlador = ControladorLivro()
         self.controlador.conectar_livro(livro)
 
+    def renderizar_tela(self, textbox=None, contador=None):
+        if textbox: textbox["text"]=self.controlador.ler_pagina(self.get_pagina_atual()).texto
+        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador.livro))
+
     def run(self):
         def voltar_pagina(textbox):
             if self.pagina_atual > 0:
                 self.pagina_anterior()
-                textbox["text"]=self.controlador.ler_pagina(self.get_pagina_atual()).texto
+                self.renderizar_tela(textbox, contador)
             else:
                 aviso = tk.Label(self.root, text="Você está na primeira página", fg="red")
                 aviso.pack()
@@ -23,7 +27,7 @@ class VisualizadorLivro(Visualizador):
         def avancar_pagina(textbox):
             if self.pagina_atual <= len(self.controlador.livro)-2:
                 self.pagina_seguinte()
-                textbox["text"]=self.controlador.ler_pagina(self.get_pagina_atual()).texto
+                self.renderizar_tela(textbox, contador)
             else:
                 aviso = tk.Label(self.root, text="Você está na última página", fg="red")
                 aviso.pack()
@@ -66,10 +70,11 @@ class VisualizadorLivro(Visualizador):
             command= lambda: avancar_pagina(texto)
         ).pack(in_=botoes, side=tk.RIGHT)
 
-        tk.Label(
+        contador = tk.Label(
             self.root,
-            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador.livro)),
-        ).pack(in_=botoes, side=tk.BOTTOM)
+            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador.livro))
+        )
+        contador.pack(in_=botoes, side=tk.BOTTOM)
 
         self.root.mainloop()
 

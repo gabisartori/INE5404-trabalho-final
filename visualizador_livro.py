@@ -66,6 +66,11 @@ class VisualizadorLivro(Visualizador):
             command= lambda: avancar_pagina(texto)
         ).pack(in_=botoes, side=tk.RIGHT)
 
+        tk.Label(
+            self.root,
+            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador.livro)),
+        ).pack(in_=botoes, side=tk.BOTTOM)
+
         self.root.mainloop()
 
     def editar_pagina(self, pagina, texto):

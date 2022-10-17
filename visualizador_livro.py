@@ -2,17 +2,19 @@ import tkinter as tk
 
 from visualizador import Visualizador
 from controlador_livro import ControladorLivro
+from controlador_texto_audio import ControladorTextoAudio
 
 class VisualizadorLivro(Visualizador):
     def __init__(self, livro) -> None:
         super().__init__()
         self.root = tk.Tk()
-        self.controlador = ControladorLivro()
-        self.controlador.conectar_livro(livro)
+        self.controlador_livro = ControladorLivro()
+        self.controlador_livro.conectar_livro(livro)
+        self.controlador_audio = ControladorTextoAudio()
 
     def renderizar_tela(self, textbox=None, contador=None):
-        if textbox: textbox["text"]=self.controlador.ler_pagina(self.get_pagina_atual()).texto
-        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador.livro))
+        if textbox: textbox["text"]=self.controlador_livro.ler_pagina(self.get_pagina_atual()).texto
+        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_livro.livro))
 
     def run(self):
         def voltar_pagina(textbox):
@@ -25,7 +27,7 @@ class VisualizadorLivro(Visualizador):
                 self.root.after(2000, aviso.destroy)
 
         def avancar_pagina(textbox):
-            if self.pagina_atual <= len(self.controlador.livro)-2:
+            if self.pagina_atual <= len(self.controlador_livro.livro)-2:
                 self.pagina_seguinte()
                 self.renderizar_tela(textbox, contador)
             else:
@@ -33,7 +35,7 @@ class VisualizadorLivro(Visualizador):
                 aviso.pack()
                 self.root.after(2000, aviso.destroy)
 
-        pagina = self.controlador.ler_pagina(self.pagina_atual)
+        pagina = self.controlador_livro.ler_pagina(self.pagina_atual)
         self.root.geometry("1280x720")
         self.root.title(pagina.livro)
         
@@ -72,9 +74,15 @@ class VisualizadorLivro(Visualizador):
 
         contador = tk.Label(
             self.root,
-            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador.livro))
+            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_livro.livro))
         )
         contador.pack(in_=botoes, side=tk.BOTTOM)
+
+        tk.Button(
+            self.root,
+            text="Ler",
+            command= lambda: ControladorTextoAudio().ler_texto(pagina.texto)
+        ).pack()
 
         self.root.mainloop()
 

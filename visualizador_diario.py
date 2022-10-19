@@ -4,17 +4,41 @@ from controlador_texto_audio import ControladorTextoAudio
 import tkinter as tk
 
 class VisualizadorDiario(Visualizador):
-    def __init__(self, pagina_atual) -> None:
-        super().__init__(pagina_atual)
+    def __init__(self, usuario) -> None:
+        super().__init__()
         self.root = tk.Tk()
-        self.controladordiario = ControladorDiario()
+        self.controlador_diario = ControladorDiario(usuario)
         self.controlador_audio = ControladorTextoAudio()
+        self.controlador_diario.conectar()
     
     def editar_pagina(self, pagina, texto):
         pagina.texto = texto
     
+    def renderizar_tela(self, textbox=None, contador=None):
+        if textbox: textbox["text"]=self.controlador_diario.ler_pagina(self.get_pagina_atual()).texto
+        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_diario.diario))
+
+
     def run(self):
-        pagina = self.controladordiario.ler_pagina(self.pagina_atual)
+        def voltar_pagina(textbox):
+            if self.pagina_atual > 0:
+                self.pagina_anterior()
+                self.renderizar_tela(textbox, contador)
+            else:
+                aviso = tk.Label(self.root, text="Você está na primeira página", fg="red")
+                aviso.pack()
+                self.root.after(2000, aviso.destroy)
+
+        def avancar_pagina(textbox):
+            if self.pagina_atual <= len(self.controlador_diario.diario)-2:
+                self.pagina_seguinte()
+                self.renderizar_tela(textbox, contador)
+            else:
+                aviso = tk.Label(self.root, text="Você está na última página", fg="red")
+                aviso.pack()
+                self.root.after(2000, aviso.destroy)
+
+        pagina = self.controlador_diario.ler_pagina(self.pagina_atual)
         self.root.geometry("1280x720")
         self.root.title(pagina.livro)
         
@@ -53,7 +77,7 @@ class VisualizadorDiario(Visualizador):
 
         contador = tk.Label(
             self.root,
-            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_livro.livro))
+            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_diario.diario))
         )
         contador.pack(in_=botoes, side=tk.BOTTOM)
 

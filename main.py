@@ -5,7 +5,7 @@ from visualizador_diario import VisualizadorDiario
 # livro = input("Digite o nome do livro: ")
 livro = "coisa"
 
-# visualizador = VisualizadorLivro(livro)
-visualizador = VisualizadorDiario()
+visualizador = VisualizadorLivro(livro)
+# visualizador = VisualizadorDiario('gabriel')
 
 visualizador.run()

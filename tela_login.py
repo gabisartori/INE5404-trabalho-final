@@ -6,7 +6,7 @@ import tkinter as tk
 
 class Application:
 
-    def init (self, master = None):
+    def __init__ (self, master = None):
 
  
 
@@ -65,11 +65,7 @@ root = Tk()
  
 
 root.geometry('900x700')
-
 root.configure(background='cyan')
-
 Application(root)
-
-button
 
 root.mainloop()

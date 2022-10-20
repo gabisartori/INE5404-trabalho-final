@@ -5,7 +5,11 @@ from visualizador_diario import VisualizadorDiario
 # livro = input("Digite o nome do livro: ")
 livro = "coisa"
 
-visualizador = VisualizadorLivro(livro)
-# visualizador = VisualizadorDiario('gabriel')
+a = int(input('livro ou diario? [1/2] '))
+
+if a == 1:
+  visualizador = VisualizadorLivro(livro)
+else:
+  visualizador = VisualizadorDiario('gabriel')
 
 visualizador.run()

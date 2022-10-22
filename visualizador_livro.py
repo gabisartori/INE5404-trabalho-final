@@ -57,38 +57,40 @@ class VisualizadorLivro(Visualizador):
             )
         texto.pack()
         
-        botoes = tk.Frame(self.root)
-        botoes.pack()
+        botoes_controle_pagina = tk.Frame(self.root)
+        botoes_controle_pagina.pack()
+        botoes_controle_audio = tk.Frame(self.root)
+        botoes_controle_audio.pack()
 
         tk.Button(
             self.root,
             text="Anterior",
             command= lambda: voltar_pagina(texto) 
-        ).pack(in_=botoes, side=tk.LEFT)
+        ).pack(in_=botoes_controle_pagina, side=tk.LEFT)
 
         tk.Button(
             self.root,
             text="Seguinte",
             command= lambda: avancar_pagina(texto)
-        ).pack(in_=botoes, side=tk.RIGHT)
+        ).pack(in_=botoes_controle_pagina, side=tk.RIGHT)
 
         contador = tk.Label(
             self.root,
             text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_livro.livro))
         )
-        contador.pack(in_=botoes, side=tk.BOTTOM)
+        contador.pack(in_=botoes_controle_pagina, side=tk.BOTTOM)
 
         tk.Button(
             self.root,
             text="Ler",
             command= lambda: ControladorTextoAudio().ler_texto(pagina.texto)
-        ).pack()
+        ).pack(in_=botoes_controle_audio, side=tk.LEFT)
 
         tk.Button(
             self.root,
             text="Parar",
             command= lambda: ControladorTextoAudio().parar_leitura()
-        ).pack()
+        ).pack(in_=botoes_controle_audio, side=tk.RIGHT)
 
         self.root.mainloop()
 

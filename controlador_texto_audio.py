@@ -1,6 +1,7 @@
 from io import BytesIO
 from gtts import gTTS
 from pygame import mixer
+from time import sleep
 
 class ControladorTextoAudio:
     def __init__(self) -> None:
@@ -17,3 +18,6 @@ class ControladorTextoAudio:
         mp3_p.seek(0)
         mixer.music.load(mp3_p, 'mp3')
         mixer.music.play()
+
+    def parar_leitura(self):
+        mixer.music.stop()

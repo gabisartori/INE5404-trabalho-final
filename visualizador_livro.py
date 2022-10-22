@@ -84,6 +84,12 @@ class VisualizadorLivro(Visualizador):
             command= lambda: ControladorTextoAudio().ler_texto(pagina.texto)
         ).pack()
 
+        tk.Button(
+            self.root,
+            text="Parar",
+            command= lambda: ControladorTextoAudio().parar_leitura()
+        ).pack()
+
         self.root.mainloop()
 
     def editar_pagina(self, pagina, texto):

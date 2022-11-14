@@ -75,7 +75,7 @@ class VisualizadorDiario(Visualizador):
         tk.Button(
             self.root,
             text="Ler",
-            command= lambda: ControladorTextoAudio().ler_texto(pagina.texto)
+            command= lambda: ControladorTextoAudio().ler_texto(self.controlador_diario.ler_pagina(self.pagina_atual).texto)
         ).pack()
 
         self.renderizar_tela(textbox, contador)

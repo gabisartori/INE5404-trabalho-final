@@ -15,8 +15,6 @@ class VisualizadorDiario(Visualizador):
         for text_line in textbox: text_line.delete(0, tk.END)
         if textbox:
             for line, text_line in zip(self.controlador_diario.ler_pagina(self.pagina_atual).texto, textbox):
-                print(line)
-                print(text_line)
                 text_line.insert(tk.END, line)
         
         if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_diario.diario))
@@ -44,14 +42,13 @@ class VisualizadorDiario(Visualizador):
         self.root.geometry("1280x720")
         self.root.title(pagina.livro)
 
-        T = tk.Label(
+        tk.Label(
             self.root,
             text="Diário",
             font=("Arial", 20)
-        )
-        T.pack()
+        ).pack()
 
-        textbox = [tk.Entry(self.root, justify=tk.LEFT, bg="white") for _ in range(10)]
+        textbox = [tk.Entry(self.root, width=50, justify=tk.LEFT, bg="white") for _ in range(10)]
         for text_line in textbox: text_line.pack()
 
         botoes = tk.Frame(self.root)
@@ -82,5 +79,4 @@ class VisualizadorDiario(Visualizador):
         ).pack()
 
         self.renderizar_tela(textbox, contador)
-
         self.root.mainloop()

@@ -1,5 +1,4 @@
-from pagina import Pagina
-
+from pagina import PaginaDiario
 
 class ControladorDiario:
     def __init__(self, usuario) -> None:
@@ -12,14 +11,14 @@ class ControladorDiario:
             conteudo = file.readlines()
             paginas = []
             for linha in conteudo:
-                a = linha.split()
+                a = linha.split(';')
                 paginas.append([a[0], ''.join(a[1:])])
             self.diario = paginas
         except FileNotFoundError:
             return '????'
 
     def ler_pagina(self, n):
-        return Pagina(self.diario[n][0], self.usuario, self.diario[n][1])
+        return PaginaDiario(self.diario[n][0], self.usuario, self.diario[n][1])
     
     def criar_pagina(self):
         pass

@@ -17,6 +17,22 @@ class ControladorDiario:
         except FileNotFoundError:
             return '????'
 
+    def montar_pagina(self, id, linhas):
+        string = str(id) + ';'
+        for linha in linhas:
+            string += linha + '&'
+        return string[:-1]
+    
+    def salvar_pagina(self, id, linhas):
+        pagina = self.montar_pagina(id, linhas)
+        with open(f"diarios/{self.usuario}.txt", 'r') as file:
+            conteudo = file.readlines()
+            conteudo[id] = pagina
+        
+        with open(f"diarios/{self.usuario}.txt", 'w') as file:
+            file.writelines(conteudo)
+        
+
     def ler_pagina(self, n):
         return PaginaDiario(self.diario[n][0], self.usuario, self.diario[n][1])
     

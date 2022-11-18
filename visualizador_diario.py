@@ -78,5 +78,11 @@ class VisualizadorDiario(Visualizador):
             command= lambda: ControladorTextoAudio().ler_texto(self.controlador_diario.ler_pagina(self.pagina_atual).texto)
         ).pack()
 
+        tk.Button(
+            self.root,
+            text="Salvar",
+            command= lambda: self.controlador_diario.salvar_pagina(self.pagina_atual, [text_line.get() for text_line in textbox])
+        ).pack()
+
         self.renderizar_tela(textbox, contador)
         self.root.mainloop()

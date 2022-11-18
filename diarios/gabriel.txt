@@ -1,2 +1,5 @@
-0;Olá meu nome é Gabriel&Nasci em Cuiabá&E atualmente moro em Floripa
-1;Esse diário precisa&Ter mais uma página&&&&&&&&
+0;
+1;
+2;
+3;
+4;

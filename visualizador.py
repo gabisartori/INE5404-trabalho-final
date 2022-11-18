@@ -1,6 +1,6 @@
 class Visualizador:
     def __init__(self) -> None:
-        self.pagina_atual = 1
+        self.pagina_atual = 0
     
     def get_pagina_atual(self):
         return self.pagina_atual

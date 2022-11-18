@@ -12,18 +12,21 @@ class ControladorDiario:
             paginas = []
             for linha in conteudo:
                 a = linha.split(';')
-                paginas.append([a[0], ''.join(a[1:])])
+                paginas.append([a[0], a[1]])
             self.diario = paginas
+            file.close()
         except FileNotFoundError:
-            return '????'
+            raise "Arquivo não encontrado"
 
     def montar_pagina(self, id, linhas):
         string = str(id) + ';'
         for linha in linhas:
+            print(linha)
             string += linha + '&'
-        return string[:-1]
+        return string[:-1] + '\n'
     
     def salvar_pagina(self, id, linhas):
+        self.conectar()
         pagina = self.montar_pagina(id, linhas)
         with open(f"diarios/{self.usuario}.txt", 'r') as file:
             conteudo = file.readlines()

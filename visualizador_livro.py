@@ -11,32 +11,27 @@ class VisualizadorLivro(Visualizador):
         self.controlador_livro = ControladorLivro()
         self.controlador_livro.conectar_livro(livro)
         self.controlador_audio = ControladorTextoAudio()
+        self.total_paginas = len(self.controlador_livro.livro)
 
     def renderizar_tela(self, textbox=None, contador=None):
         if textbox: textbox["text"]=self.controlador_livro.ler_pagina(self.get_pagina_atual()).texto
-        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_livro.livro))
+        if contador: contador["text"]=f"Página {self.pagina_atual+1} / {self.total_paginas}"
 
     def run(self, window=None):
         if not window: window = self.root
         
         # Comandos dos botões
         def voltar_pagina(textbox):
-            if self.pagina_atual > 0:
-                self.pagina_anterior()
+            if self.pagina_anterior():
                 self.renderizar_tela(textbox, contador)
             else:
-                aviso = tk.Label(window, text="Você está na primeira página", fg="red")
-                aviso.pack()
-                self.root.after(2000, aviso.destroy)
+                self.aviso(window, "Você está na primeira página")
 
         def avancar_pagina(textbox):
-            if self.pagina_atual <= len(self.controlador_livro.livro)-2:
-                self.pagina_seguinte()
+            if self.pagina_seguinte(self.total_paginas):
                 self.renderizar_tela(textbox, contador)
             else:
-                aviso = tk.Label(window, text="Você está na última página", fg="red")
-                aviso.pack()
-                self.root.after(2000, aviso.destroy)
+                self.aviso(window, "Você está na última página")
 
         pagina = self.controlador_livro.ler_pagina(self.pagina_atual)
         window.geometry("1280x720")
@@ -79,7 +74,7 @@ class VisualizadorLivro(Visualizador):
 
         contador = tk.Label(
             window,
-            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_livro.livro))
+            text=f"Página {self.pagina_atual+1} / {self.total_paginas}"
         )
         contador.pack(in_=botoes_controle_pagina, side=tk.BOTTOM)
 

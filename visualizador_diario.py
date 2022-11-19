@@ -18,7 +18,7 @@ class VisualizadorDiario(Visualizador):
             for line, text_line in zip(self.controlador_diario.ler_pagina(self.pagina_atual).texto, textbox):
                 text_line.insert(tk.END, line)
         
-        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(self.total_paginas)
+        if contador: contador["text"]=f"Página {self.pagina_atual+1} / {len(self.controlador_diario.diario)}"
     
     def run(self, window=None):
         if not window: window = self.root

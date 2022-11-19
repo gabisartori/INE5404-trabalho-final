@@ -10,6 +10,7 @@ class VisualizadorDiario(Visualizador):
         self.controlador_diario = ControladorDiario(usuario)
         self.controlador_diario.conectar()
         self.controlador_audio = ControladorTextoAudio()
+        self.total_paginas = len(self.controlador_diario.diario)
     
     def renderizar_tela(self, textbox=None, contador=None):
         for text_line in textbox: text_line.delete(0, tk.END)
@@ -17,27 +18,22 @@ class VisualizadorDiario(Visualizador):
             for line, text_line in zip(self.controlador_diario.ler_pagina(self.pagina_atual).texto, textbox):
                 text_line.insert(tk.END, line)
         
-        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_diario.diario))
+        if contador: contador["text"]="Página " + str(self.pagina_atual+1) + " / " + str(self.total_paginas)
     
     def run(self):
+        # Comandos dos botões
         def voltar_pagina(textbox, contador):
-            if self.pagina_atual > 0:
-                self.pagina_anterior()
+            if self.pagina_anterior():
                 self.renderizar_tela(textbox, contador)
             else:
-                aviso = tk.Label(self.root, text="Você está na primeira página", fg="red")
-                aviso.pack()
-                self.root.after(2000, aviso.destroy)
+                self.aviso(self.root, "Você está na primeira página")
 
         def avancar_pagina(textbox, contador):
-            if self.pagina_atual <= len(self.controlador_diario.diario)-2:
-                self.pagina_seguinte()
+            if self.pagina_seguinte(self.total_paginas):
                 self.renderizar_tela(textbox, contador)
             else:
-                aviso = tk.Label(self.root, text="Você está na última página", fg="red")
-                aviso.pack()
-                self.root.after(2000, aviso.destroy)
-
+                self.aviso(self.root, "Você está na última página")
+    
         pagina = self.controlador_diario.ler_pagina(self.pagina_atual)
         self.root.geometry("1280x720")
         self.root.title(pagina.livro)
@@ -68,7 +64,7 @@ class VisualizadorDiario(Visualizador):
 
         contador = tk.Label(
             self.root,
-            text="Página " + str(self.pagina_atual+1) + " / " + str(len(self.controlador_diario.diario))
+            text=f"Página {self.pagina_atual+1} / {len(self.controlador_diario.diario)}"
         )
         contador.pack(in_=botoes, side=tk.BOTTOM)
 

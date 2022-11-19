@@ -1,6 +1,9 @@
+import tkinter as tk
+
 class Visualizador:
     def __init__(self) -> None:
         self.pagina_atual = 0
+        self.total_paginas = 0
     
     def get_pagina_atual(self):
         return self.pagina_atual
@@ -9,13 +12,24 @@ class Visualizador:
         self.pagina_atual = pagina
 
     def pagina_anterior(self):
-        self.pagina_atual -= 1
+        if self.pagina_atual > 0:
+            self.pagina_atual -= 1
+            return True
+        return False
     
-    def pagina_seguinte(self):
-        self.pagina_atual += 1
+    def pagina_seguinte(self, total_paginas):
+        if self.pagina_atual < total_paginas - 1:
+            self.pagina_atual += 1
+            return True
+        return False
     
     def editar_pagina(self, pagina, texto):
         print("Página do que?")
+    
+    def aviso(self, window, texto):
+        aviso = tk.Label(window, text=texto, fg="red")
+        aviso.pack()
+        window.after(2000, aviso.destroy)
     
     @staticmethod
     def update_texto(textbox, new_text):

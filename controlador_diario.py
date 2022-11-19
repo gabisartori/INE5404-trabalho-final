@@ -16,7 +16,7 @@ class ControladorDiario:
             self.diario = paginas
             file.close()
         except FileNotFoundError:
-            raise "Arquivo não encontrado"
+            raise Exception("Usuário não encontrado")
 
     def montar_pagina(self, id, linhas):
         string = str(id) + ';'

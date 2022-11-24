@@ -1,24 +1,23 @@
 from pagina import PaginaDiario
+import json
 
 class ControladorDiario:
     def __init__(self, usuario) -> None:
         self.usuario = usuario
-        self.diario = []
+        self.diario = None
     
     def conectar(self):
         try:
-            file = open(f"diarios/{self.usuario}.txt", 'r')
-            conteudo = file.readlines()
-            paginas = []
-            for linha in conteudo:
-                a = linha.split(';')
-                paginas.append([a[0], a[1]])
-            self.diario = paginas
-            file.close()
+            with open(f"diarios/{self.usuario}.json") as file:
+                self.diario = json.load(file)
         except FileNotFoundError:
-            raise Exception("Usuário não encontrado")
+            with open(f"diarios/{self.usuario}.json", 'w') as file:
+                json.dump([], file)
+            self.conectar()
 
     def montar_pagina(self, id, linhas):
+        
+        
         string = str(id) + ';'
         for linha in linhas:
             print(linha)
@@ -27,17 +26,19 @@ class ControladorDiario:
     
     def salvar_pagina(self, id, linhas):
         self.conectar()
-        pagina = self.montar_pagina(id, linhas)
-        with open(f"diarios/{self.usuario}.txt", 'r') as file:
-            conteudo = file.readlines()
-            conteudo[id] = pagina
-        
-        with open(f"diarios/{self.usuario}.txt", 'w') as file:
-            file.writelines(conteudo)
-        
+        with open(f"diarios/{self.usuario}.json", 'r') as file:
+            coisa = json.load(file)
+         
+        with open(f"diarios/{self.usuario}.json", 'w') as file:
+            for pagina in coisa:
+                if pagina['numero'] == id:
+                    pagina['linhas'] = linhas
+                    json.dump(coisa, file)
+                    return
+                    
 
     def ler_pagina(self, n):
-        return PaginaDiario(self.diario[n][0], self.usuario, self.diario[n][1])
+        return PaginaDiario(str(n), self.usuario, self.diario[n]["texto"])
     
     def criar_pagina(self):
         pass

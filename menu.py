@@ -13,7 +13,7 @@ def inicio():
 
     tk.Label(
         root,
-        text="Diário",
+        text="Menu",
         font=("Arial", 20)
     ).pack()
 

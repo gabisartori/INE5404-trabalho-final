@@ -33,6 +33,18 @@ class Menu(Visualizador):
 
         tk.Button(
             self.root,
+            text="Darth Plagueis, the Wise",
+            command=lambda: self.livro("darth_plagueis")
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text="Darth Plagueis, o sábio",
+            command=lambda: self.livro("darth_plagueis_br")
+        ).pack()
+
+        tk.Button(
+            self.root,
             text="Diário",
             command=self.diario
         ).pack()

@@ -10,7 +10,7 @@ class ControladorLivro:
             conteudo = file.readlines()
             paginas = []
             for linha in conteudo:
-                a = linha.split()
+                a = linha.split(';')
                 paginas.append([a[0], a[1], ' '.join(a[2:])])
             self.livro = paginas
         except FileNotFoundError:

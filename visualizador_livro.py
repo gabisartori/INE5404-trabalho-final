@@ -80,7 +80,7 @@ class VisualizadorLivro(Visualizador):
         tk.Button(
             window,
             text="Ler",
-            command= lambda: ControladorTextoAudio().ler_texto(pagina.texto)
+            command= lambda: ControladorTextoAudio().ler_texto(self.controlador_livro.ler_pagina(self.pagina_atual).texto)
         ).pack(in_=botoes_controle_audio, side=tk.LEFT)
 
         tk.Button(

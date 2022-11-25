@@ -67,12 +67,21 @@ class VisualizadorDiario(Visualizador):
             text=f"Página {self.pagina_atual+1} / {len(self.controlador_diario.diario)}"
         )
         contador.pack(in_=botoes, side=tk.BOTTOM)
-
+        
+        botoes_controle_audio = tk.Frame(window)
+        botoes_controle_audio.pack()
+        
         tk.Button(
             window,
             text="Ler",
             command= lambda: ControladorTextoAudio().ler_texto(self.controlador_diario.ler_pagina(self.pagina_atual).texto)
-        ).pack()
+        ).pack(in_=botoes_controle_audio, side=tk.LEFT)
+
+        tk.Button(
+            window,
+            text="Parar",
+            command= lambda: ControladorTextoAudio().parar_leitura()
+        ).pack(in_=botoes_controle_audio, side=tk.RIGHT)
 
         tk.Button(
             window,

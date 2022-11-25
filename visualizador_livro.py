@@ -5,9 +5,8 @@ from controlador_livro import ControladorLivro
 from controlador_texto_audio import ControladorTextoAudio
 
 class VisualizadorLivro(Visualizador):
-    def __init__(self, livro) -> None:
-        super().__init__()
-        # self.root = tk.Tk()
+    def __init__(self, livro, root=None) -> None:
+        super().__init__(root)
         self.controlador_livro = ControladorLivro()
         self.controlador_livro.conectar_livro(livro)
         self.controlador_audio = ControladorTextoAudio()

@@ -1,10 +1,17 @@
 import tkinter as tk
 
 class Visualizador:
-    def __init__(self) -> None:
+    def __init__(self, root=None) -> None:
         self.pagina_atual = 0
         self.total_paginas = 0
-    
+        self.root = root if root else tk.Tk()
+
+    @staticmethod    
+    def clear(window):
+        for widget in window.winfo_children():
+            widget.destroy()
+
+
     def get_pagina_atual(self):
         return self.pagina_atual
 

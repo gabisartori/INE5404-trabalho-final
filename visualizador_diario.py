@@ -4,9 +4,8 @@ from controlador_texto_audio import ControladorTextoAudio
 import tkinter as tk
 
 class VisualizadorDiario(Visualizador):
-    def __init__(self, usuario) -> None:
-        super().__init__()
-        # self.root = tk.Tk()
+    def __init__(self, usuario, root=None) -> None:
+        super().__init__(root)
         self.controlador_diario = ControladorDiario(usuario)
         self.controlador_diario.conectar()
         self.controlador_audio = ControladorTextoAudio()

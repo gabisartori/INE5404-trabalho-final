@@ -12,29 +12,19 @@ class ControladorDiario:
                 self.diario = json.load(file)
         except FileNotFoundError:
             with open(f"diarios/{self.usuario}.json", 'w') as file:
-                json.dump([], file)
+                json.dump([{"numero": n, "texto": [""]*10} for n in range(10)], file)
             self.conectar()
 
-    def montar_pagina(self, id, linhas):
-        
-        
-        string = str(id) + ';'
-        for linha in linhas:
-            print(linha)
-            string += linha + '&'
-        return string[:-1] + '\n'
-    
     def salvar_pagina(self, id, linhas):
-        self.conectar()
         with open(f"diarios/{self.usuario}.json", 'r') as file:
             coisa = json.load(file)
          
         with open(f"diarios/{self.usuario}.json", 'w') as file:
             for pagina in coisa:
                 if pagina['numero'] == id:
-                    pagina['linhas'] = linhas
+                    pagina['texto'] = linhas
                     json.dump(coisa, file)
-                    return
+        self.conectar()
                     
 
     def ler_pagina(self, n):

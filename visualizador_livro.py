@@ -12,11 +12,13 @@ class VisualizadorLivro(Visualizador):
         self.controlador_audio = ControladorTextoAudio()
         self.total_paginas = len(self.controlador_livro.livro)
 
-    def renderizar_tela(self, textbox=None, contador=None):
+    def renderizar_tela(self, textbox=None, contador=None) -> None:
+        '''Recarrega componentes da tela que podem ser alterados'''
         if textbox: textbox["text"]=self.controlador_livro.ler_pagina(self.get_pagina_atual()).texto
         if contador: contador["text"]=f"Página {self.pagina_atual+1} / {self.total_paginas}"
 
-    def run(self, window=None):
+    def run(self, window=None) -> None:
+        '''Constroi a tela e inicia o loop'''
         if not window: window = self.root
         
         # Comandos dos botões
@@ -32,10 +34,12 @@ class VisualizadorLivro(Visualizador):
             else:
                 self.aviso(window, "Você está na última página")
 
+        # Carrega a primeira página do livro
         pagina = self.controlador_livro.ler_pagina(self.pagina_atual)
         window.geometry("1280x720")
         window.title(pagina.livro)
         
+        # Título da janela
         T = tk.Label(
             window,
             text=pagina.livro,
@@ -43,6 +47,7 @@ class VisualizadorLivro(Visualizador):
         )
         T.pack()
 
+        # Texto da página 
         texto = tk.Label(
             window,
             text=pagina.texto,
@@ -54,11 +59,13 @@ class VisualizadorLivro(Visualizador):
             )
         texto.pack()
         
+        # Containers para alinhar os botões
         botoes_controle_pagina = tk.Frame(window)
         botoes_controle_pagina.pack()
         botoes_controle_audio = tk.Frame(window)
         botoes_controle_audio.pack()
 
+        # Botões de controle de página
         tk.Button(
             window,
             text="Anterior",
@@ -77,6 +84,7 @@ class VisualizadorLivro(Visualizador):
         )
         contador.pack(in_=botoes_controle_pagina, side=tk.BOTTOM)
 
+        # Botões de controle de áudio
         tk.Button(
             window,
             text="Ler",
@@ -89,7 +97,6 @@ class VisualizadorLivro(Visualizador):
             command= lambda: ControladorTextoAudio().parar_leitura()
         ).pack(in_=botoes_controle_audio, side=tk.RIGHT)
 
-        # if window == self.root: window.mainloop()
 
     def editar_pagina(self, pagina, texto):
         return "Você não pode editar uma página de um livro"

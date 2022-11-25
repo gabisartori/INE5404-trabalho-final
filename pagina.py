@@ -1,12 +1,12 @@
 class Pagina:
-    def __init__(self, numero, livro, texto: str or list) -> None:
-        self.numero = numero
-        self.livro = livro
-        self.texto = texto
+    def __init__(self, numero: int, livro: str, texto: str or list[str]) -> None:
+        self.numero: int = numero
+        self.livro: str = livro
+        self.texto: str or list[str] = texto
 
 
 class PaginaDiario(Pagina):
-    def __init__(self, numero, livro, texto):
+    def __init__(self, numero: int, livro: str, texto: str or str[list]) -> None:
         super().__init__(numero, livro, texto)
         while len(self.texto) < 10:
             self.texto.append('')

@@ -82,6 +82,7 @@ class Application:
             
             self.confirmar = Label (master, text= 'As senhas devem ser iguais!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='red')
             self.confirmar.pack()
+            master.after(2000, self.confirmar.destroy)
                         
 
     def verificaSenha(self,master,nome,senha):
@@ -94,12 +95,16 @@ class Application:
                 print('achei')
                 self.confirmar = Label (master, text= 'Usuário autenticado!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='green')
                 self.confirmar.pack()
+                master.after(2000, self.confirmar.destroy)
+
                 flag = True
                 break
         if flag == False:
             print('nao achei')
             self.confirmar = Label (master, text= 'Erro de autenticação!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='green')
             self.confirmar.pack()
+            master.after(2000, self.confirmar.destroy)
+
 
         file.close()            
             

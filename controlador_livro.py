@@ -1,4 +1,5 @@
 from modelo_pagina import Pagina
+import os
 
 class ControladorLivro:
     def __init__(self) -> None:
@@ -21,3 +22,10 @@ class ControladorLivro:
 
     def ler_pagina(self, n: int) -> Pagina:
         return Pagina(n, self.livro[n][1], self.livro[n][2])
+    
+    def get_livros(self) -> list[str]:
+        '''Retorna uma lista com os nomes dos livros disponíveis e seus arquivos'''
+        for arquivo in os.listdir("livros"):
+            if arquivo.endswith(".txt"):
+                with open("livros/" + arquivo, "r") as f:
+                    yield arquivo[:-4], f.readline().split(';')[1]

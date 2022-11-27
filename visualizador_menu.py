@@ -33,7 +33,8 @@ class Menu(Visualizador):
             tk.Button(
                 self.root,
                 text=titulo,
-                command=lambda livro=livro: self.visualizar_livro(livro)
+                command=lambda livro=livro: self.visualizar_livro(livro),
+                width=25
             ).pack()
 
         tk.Button(

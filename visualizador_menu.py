@@ -29,11 +29,11 @@ class Menu(Visualizador):
         
         # Livros
         # Cria um botão com o nome de cada livro cadastrado no sistema
-        for livro, titulo in self.controlador_livro.get_livros():
+        for arquivo, titulo in self.controlador_livro.get_livros():
             tk.Button(
                 self.root,
                 text=titulo,
-                command=lambda livro=livro: self.visualizar_livro(livro),
+                command=lambda : self.livro(arquivo),
                 width=25
             ).pack()
 

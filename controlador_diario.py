@@ -1,4 +1,4 @@
-from pagina import PaginaDiario
+from modelo_pagina import PaginaDiario
 import json
 
 class ControladorDiario:

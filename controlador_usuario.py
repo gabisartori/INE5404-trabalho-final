@@ -1,4 +1,4 @@
-from usuario import Usuario
+from modelo_usuario import Usuario
 
 class ControladorUsuario:
     def __init__(self, db) -> None:

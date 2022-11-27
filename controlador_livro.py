@@ -1,4 +1,4 @@
-from pagina import Pagina
+from modelo_pagina import Pagina
 
 class ControladorLivro:
     def __init__(self) -> None:

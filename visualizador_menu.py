@@ -10,7 +10,7 @@ class VisualizadorMenu(Visualizador):
         self.usuario: str = usuario
         self.controlador_livro = ControladorLivro()
 
-    def inicio(self):
+    def run(self):
         self.clear(self.root)
         self.root.geometry("1280x720")
         self.root.title("Menu")
@@ -47,16 +47,16 @@ class VisualizadorMenu(Visualizador):
         self.clear(self.root)
         visualizador = VisualizadorLivro(livro, self.root)
         visualizador.run()
-        tk.Button(self.root, text="voltar", command=self.inicio).pack()
+        tk.Button(self.root, text="voltar", command=self.run).pack()
 
 
     def diario(self):
         self.clear(self.root)
         visualizador = VisualizadorDiario(self.usuario, self.root)
         visualizador.run()
-        tk.Button(self.root, text="voltar", command=self.inicio).pack()
+        tk.Button(self.root, text="voltar", command=self.run).pack()
 
 if __name__ == "__main__":
     a= VisualizadorMenu("gabriel")
-    a.inicio()
+    a.run()
     a.root.mainloop()

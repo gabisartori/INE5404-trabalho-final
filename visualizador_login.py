@@ -81,7 +81,7 @@ class VisualizadorLogin(Visualizador):
     
     def tela_menu(self, usuario):
         self.clear(self.root)
-        VisualizadorMenu(usuario, self.root).inicio()
+        VisualizadorMenu(usuario, self.root).run()
         tk.Button(
             self.root,
             text='Voltar',

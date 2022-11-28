@@ -1,0 +1,14 @@
+[
+    {
+        "id": 0,
+        "nome": "Gabriel",
+        "salt": "1234567890",
+        "hash": "e1ca9c8c751461b6160122e361fb38e147069aa7a825f1514c92bb2c7a84be1a"
+    },
+    {
+        "id": 1,
+        "nome": "Clara",
+        "salt": "1234567890",
+        "hash": "e1ca9c8c751461b6160122e361fb38e147069aa7a825f1514c92bb2c7a84be1a"
+    }
+]

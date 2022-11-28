@@ -8,10 +8,10 @@ class ControladorLogin:
         file.write('\n')
         file.close()
     
-    def verificar_senha(self, nome, senha):
+    def verificar_senha(self, nome, salted_hash):
         with open("teste.txt", "r") as file:
             texto = file.readlines()
             for linha in texto:
-                if str(nome + ' ' + senha) in linha:
+                if str(nome + ' ' + salted_hash) in linha:
                     return True
             return False

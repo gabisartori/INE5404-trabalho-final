@@ -1,16 +1,17 @@
 from modelo_usuario import Usuario
+import json
+
 
 class ControladorUsuario:
     def __init__(self, db) -> None:
         self.db = db
-    
-    def conectar_banco(self, db) -> None:
-        pass
+        self.usuarios = None
+
+    def conectar_banco(self) -> None:
+        with open(f"{self.db}.json") as file:
+            self.usuarios = json.load(file)
 
     def buscar_usuario_por_id(self, id) -> Usuario:
-        pass
-
-    def buscar_usuario_por_email(self, email) -> Usuario:
         pass
 
     def cadastrar_usuario(self, usuario) -> Usuario or str:

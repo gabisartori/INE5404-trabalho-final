@@ -58,7 +58,7 @@ class VisualizadorLogin(Visualizador):
 
     def verificaSenha(self, nome, senha):
         if self.controlador_login.verificar_senha(nome, senha):
-            self.tela_menu()
+            self.tela_menu(nome)
         else:
             confirmar = tk.Label(
                 self.root,
@@ -79,9 +79,9 @@ class VisualizadorLogin(Visualizador):
             command=self.run
         ).pack()
     
-    def tela_menu(self):
+    def tela_menu(self, usuario):
         self.clear(self.root)
-        VisualizadorMenu(self.root).inicio()
+        VisualizadorMenu(usuario, self.root).inicio()
         tk.Button(
             self.root,
             text='Voltar',
@@ -90,8 +90,6 @@ class VisualizadorLogin(Visualizador):
             command=self.run
         ).pack()
 
-root = tk.Tk()
-root.geometry('900x700')
-a = VisualizadorLogin(root)
+a = VisualizadorLogin()
 a.run()
-root.mainloop()
+a.root.mainloop()

@@ -4,7 +4,7 @@ from visualizador_diario import VisualizadorDiario
 from visualizador import Visualizador
 from controlador_livro import ControladorLivro
 
-class Menu(Visualizador):
+class VisualizadorMenu(Visualizador):
     def __init__(self, usuario: str, root: tk.Tk =None) -> None:
         super().__init__(root)
         self.usuario: str = usuario
@@ -55,8 +55,3 @@ class Menu(Visualizador):
         visualizador = VisualizadorDiario(self.usuario, self.root)
         visualizador.run(self.root)
         tk.Button(self.root, text="voltar", command=self.inicio).pack()
-
-if __name__ == "__main__":
-    a= Menu("gabriel")
-    a.inicio()
-    a.root.mainloop()

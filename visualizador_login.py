@@ -3,13 +3,19 @@ from visualizador import Visualizador
 from visualizador_cadastro import VisualizadorCadastro
 from visualizador_menu import VisualizadorMenu
 from controlador_login import ControladorLogin
+from controlador_usuario import ControladorUsuario
+import hashlib
 
+def hash_password(password: str, salt: str):
+    return hashlib.sha256((password + salt).encode()).hexdigest()
 
 class VisualizadorLogin(Visualizador):
 
     def __init__(self, root=None):
         super().__init__(root)
         self.controlador_login = ControladorLogin()
+        self.controlador_usuario = ControladorUsuario("usuarios")
+        self.controlador_usuario.conectar_banco()
 
     def run(self):
         self.clear(self.root)
@@ -45,7 +51,7 @@ class VisualizadorLogin(Visualizador):
             text='Entrar',
             font=('Calibri', '12'),
             width=20,
-            command=lambda: self.verificaSenha(nome.get(), senha.get())
+            command=lambda: self.login(nome.get(), senha.get())
         ).pack()
 
         tk.Button(
@@ -56,17 +62,35 @@ class VisualizadorLogin(Visualizador):
             command=self.tela_cadastro
         ).pack()
 
-    def verificaSenha(self, nome, senha):
-        if self.controlador_login.verificar_senha(nome, senha):
-            self.tela_menu(nome)
-        else:
-            confirmar = tk.Label(
-                self.root,
-                text='Erro de autenticação!',
-                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                fg='green'
-            ).pack()
-            self.root.after(2000, confirmar.destroy)
+    def login(self, nome, senha):
+        for usuario in self.controlador_usuario.usuarios:
+            if usuario["nome"] == nome:
+                salted_hash = hash_password(senha, usuario["salt"])
+                if self.controlador_login.verificar_senha(nome, salted_hash):
+                    self.tela_menu(nome)
+                    return
+
+            
+                else:
+                    confirmar = tk.Label(
+                        self.root,
+                        text='Senha incorreta!',
+                        font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                        fg='green'
+                    )
+                    confirmar.pack()
+                    self.root.after(2000, confirmar.destroy)
+                    return
+
+        confirmar = tk.Label(
+            self.root,
+            text='Usuário não cadastrado!',
+            font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+            fg='green'
+        )
+        confirmar.pack()
+        self.root.after(2000, confirmar.destroy)
+
 
     def tela_cadastro(self):
         self.clear(self.root)

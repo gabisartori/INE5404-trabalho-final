@@ -12,7 +12,9 @@ class ControladorUsuario:
             self.usuarios = json.load(file)
 
     def buscar_usuario_por_id(self, id) -> Usuario:
-        pass
+        for usuario in self.usuarios:
+            if usuario['id'] == id:
+                return Usuario(usuario['id'], usuario['nome'], usuario['hash'])
 
     def cadastrar_usuario(self, usuario) -> Usuario or str:
         pass
@@ -21,4 +23,9 @@ class ControladorUsuario:
         pass
 
     def remover_usuario(self, id) -> Usuario or str:
-        pass
+        for usuario in self.usuarios:
+            if usuario['id'] == id:
+                self.usuarios.remove(usuario)
+                with open(f"{self.db}.json", 'w') as file:
+                    json.dump(self.usuarios, file)
+                return usuario

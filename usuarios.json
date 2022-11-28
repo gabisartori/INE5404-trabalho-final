@@ -2,8 +2,8 @@
     {
         "id": 0,
         "nome": "Gabriel",
-        "salt": "1234567890",
-        "hash": "e1ca9c8c751461b6160122e361fb38e147069aa7a825f1514c92bb2c7a84be1a"
+        "salt": "933041",
+        "hash": "a84b7f44c341cfb3246c65fee7f77e10bca00f7066c2a97c830e70c4d19847c0"
     },
     {
         "id": 1,

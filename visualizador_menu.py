@@ -46,14 +46,14 @@ class VisualizadorMenu(Visualizador):
     def livro(self, livro: str):
         self.clear(self.root)
         visualizador = VisualizadorLivro(livro, self.root)
-        visualizador.run(self.root)
+        visualizador.run()
         tk.Button(self.root, text="voltar", command=self.inicio).pack()
 
 
     def diario(self):
         self.clear(self.root)
         visualizador = VisualizadorDiario(self.usuario, self.root)
-        visualizador.run(self.root)
+        visualizador.run()
         tk.Button(self.root, text="voltar", command=self.inicio).pack()
 
 if __name__ == "__main__":

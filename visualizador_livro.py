@@ -17,31 +17,30 @@ class VisualizadorLivro(Visualizador):
         if textbox: textbox["text"]=self.controlador_livro.ler_pagina(self.get_pagina_atual()).texto
         if contador: contador["text"]=f"Página {self.pagina_atual+1} / {self.total_paginas}"
 
-    def run(self, window=None) -> None:
+    def run(self) -> None:
         '''Constroi a tela e inicia o loop'''
-        if not window: window = self.root
         
         # Comandos dos botões
         def voltar_pagina(textbox):
             if self.pagina_anterior():
                 self.renderizar_tela(textbox, contador)
             else:
-                self.aviso(window, "Você está na primeira página")
+                self.aviso(self.root, "Você está na primeira página")
 
         def avancar_pagina(textbox):
             if self.pagina_seguinte(self.total_paginas):
                 self.renderizar_tela(textbox, contador)
             else:
-                self.aviso(window, "Você está na última página")
+                self.aviso(self.root, "Você está na última página")
 
         # Carrega a primeira página do livro
         pagina = self.controlador_livro.ler_pagina(self.pagina_atual)
-        window.geometry("1280x720")
-        window.title(pagina.livro)
+        self.root.geometry("1280x720")
+        self.root.title(pagina.livro)
         
         # Título da janela
         T = tk.Label(
-            window,
+            self.root,
             text=pagina.livro,
             font=("Arial", 20)
         )
@@ -49,7 +48,7 @@ class VisualizadorLivro(Visualizador):
 
         # Texto da página 
         texto = tk.Label(
-            window,
+            self.root,
             text=pagina.texto,
             height=20,
             width=100,
@@ -60,39 +59,39 @@ class VisualizadorLivro(Visualizador):
         texto.pack()
         
         # Containers para alinhar os botões
-        botoes_controle_pagina = tk.Frame(window)
+        botoes_controle_pagina = tk.Frame(self.root)
         botoes_controle_pagina.pack()
-        botoes_controle_audio = tk.Frame(window)
+        botoes_controle_audio = tk.Frame(self.root)
         botoes_controle_audio.pack()
 
         # Botões de controle de página
         tk.Button(
-            window,
+            self.root,
             text="Anterior",
             command= lambda: voltar_pagina(texto) 
         ).pack(in_=botoes_controle_pagina, side=tk.LEFT)
 
         tk.Button(
-            window,
+            self.root,
             text="Seguinte",
             command= lambda: avancar_pagina(texto)
         ).pack(in_=botoes_controle_pagina, side=tk.RIGHT)
 
         contador = tk.Label(
-            window,
+            self.root,
             text=f"Página {self.pagina_atual+1} / {self.total_paginas}"
         )
         contador.pack(in_=botoes_controle_pagina, side=tk.BOTTOM)
 
         # Botões de controle de áudio
         tk.Button(
-            window,
+            self.root,
             text="Ler",
             command= lambda: ControladorTextoAudio().ler_texto(self.controlador_livro.ler_pagina(self.pagina_atual).texto)
         ).pack(in_=botoes_controle_audio, side=tk.LEFT)
 
         tk.Button(
-            window,
+            self.root,
             text="Parar",
             command= lambda: ControladorTextoAudio().parar_leitura()
         ).pack(in_=botoes_controle_audio, side=tk.RIGHT)

@@ -1,116 +1,95 @@
-from tkinter import *
 import tkinter as tk
-
-class Application:
-
-    def __init__ (self, master):
-        for widget in master.winfo_children():
-            widget.destroy()    
-        
-        self.label = tk.Label (text = "Menu", font = ("Calibri", 25, "bold"), foreground = "black", width = 50, height =8)
-        self.label.pack()
-
-        self.label_email = Label (master, text = 'Email:', font = ('Bahnschrift Light SemiCondensed', 15,'bold'))
-        self.label_email.pack()
-
-        self.nome = Entry(master, width = 25, font = ("Verdana", 18, "italic"))
-        self.nome.pack()
-        
-        self.label_senha = Label (master, text = 'Senha:', font = ('Bahnschrift Light SemiCondensed', 15,'bold'))
-        self.label_senha.pack()
-        
-        self.senha = Entry(master, width = 25, font = ("Verdana", 18, "italic"))
-        self.senha.pack()
-        #self.senha["show"] = "*"
+from visualizador import Visualizador
+from visualizador_cadastro import VisualizadorCadastro
+from visualizador_menu import VisualizadorMenu
+from controlador_login import ControladorLogin
 
 
-        self.entrar = Button(master, text = 'Entrar', font = ('Calibri','12'),width = 20, command = lambda: self.verificaSenha(master, self.nome.get(),self.senha.get()))
-        self.entrar.pack()
+class VisualizadorLogin(Visualizador):
 
-        self.entrar = Button(master, text = 'Cadastrar-se', font = ('Calibri','12'),width = 20, command = lambda : self.cadastro(master))
-        self.entrar.pack()
+    def __init__(self, root=None):
+        super().__init__(root)
+        self.controlador_login = ControladorLogin()
 
+    def run(self):
+        self.clear(self.root)
 
-    def cadastro(self,master):
-        for widget in master.winfo_children():
-            widget.destroy()
-            
-        
-        self.label = tk.Label (text = "Cadastro", font = ("Calibri", 25, "bold"), foreground = "black", width = 50, height =8)
-        self.label.pack()
+        tk.Label(
+            text="Menu",
+            font=("Calibri", 25, "bold"),
+            foreground="black",
+            width=50,
+            height=8).pack()
 
-        self.label_email = Label (master, text = 'Email:', font = ('Bahnschrift Light SemiCondensed', 15,'bold'))
-        self.label_email.pack()
+        tk.Label(
+            self.root,
+            text='Email:',
+            font=('Bahnschrift Light SemiCondensed', 15, 'bold')
+        ).pack()
 
-        self.nome = Entry(master, width = 25, font = ("Verdana", 18, "italic"))
-        self.nome.pack()
-        
-        self.label_senha = Label (master, text = 'Senha:', font = ('Bahnschrift Light SemiCondensed', 15,'bold'))
-        self.label_senha.pack()
-        
-        self.senha = Entry(master, width = 25, font = ("Verdana", 18, "italic"))
-        self.senha.pack()
-        
-        self.label_senha = Label (master, text = 'Confirma senha:', font = ('Bahnschrift Light SemiCondensed', 15,'bold'))
-        self.label_senha.pack()              
-            
-        self.confirma_senha= Entry(master, width = 25, font = ("Verdana", 18, "italic"))
-        self.confirma_senha.pack()
+        nome = tk.Entry(self.root, width=25, font=("Verdana", 18, "italic"))
+        nome.pack()
 
+        tk.Label(
+            self.root,
+            text='Senha:',
+            font=('Bahnschrift Light SemiCondensed', 15, 'bold')
+        ).pack()
 
-        self.entrar = Button(master, text = 'Cadastrar', font = ('Calibri','12'),width = 20, command = lambda : self.faz_cadastro(master, self.nome.get(),self.senha.get(),self.confirma_senha.get()))
-        self.entrar.pack()
-        
-        self.voltar = Button(master, text = 'Voltar', font = ('Calibri','12'),width = 20, command = lambda : self.__init__(master))
-        self.voltar.pack()    
-        
-    def faz_cadastro(self,master, nome, senha, confirma):
-        self.cadastro(master)
+        senha = tk.Entry(self.root, width=25, font=("Verdana", 18, "italic"))
+        senha.pack()
+        senha["show"] = "*"
 
-        if senha == confirma:
-            file = open("teste.txt","a")
-            file.write(str(nome + ' ' + senha))
-            file.write('\n')
-            file.close()
-                       
-            self.confirmar = Label (master, text= 'Cadastro concluído com sucesso!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='green')
-            self.confirmar.pack()
-            master.after(2000, self.confirmar.destroy)
-            
-            
+        tk.Button(
+            self.root,
+            text='Entrar',
+            font=('Calibri', '12'),
+            width=20,
+            command=lambda: self.verificaSenha(nome.get(), senha.get())
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text='Cadastrar-se',
+            font=('Calibri', '12'),
+            width=20,
+            command=self.tela_cadastro
+        ).pack()
+
+    def verificaSenha(self, nome, senha):
+        if self.controlador_login.verificar_senha(nome, senha):
+            self.tela_menu(nome)
         else:
-            
-            self.confirmar = Label (master, text= 'As senhas devem ser iguais!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='red')
-            self.confirmar.pack()
-            master.after(2000, self.confirmar.destroy)
-                        
+            confirmar = tk.Label(
+                self.root,
+                text='Erro de autenticação!',
+                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                fg='green'
+            ).pack()
+            self.root.after(2000, confirmar.destroy)
 
-    def verificaSenha(self,master,nome,senha):
-        
-        file = open("teste.txt","r")
-        texto = file.readlines()
-        flag = False
-        for linha1 in texto:
-            if str(nome + ' ' + senha) in linha1:
-                print('achei')
-                self.confirmar = Label (master, text= 'Usuário autenticado!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='green')
-                self.confirmar.pack()
-                master.after(2000, self.confirmar.destroy)
+    def tela_cadastro(self):
+        self.clear(self.root)
+        VisualizadorCadastro(self.root).run()
+        tk.Button(
+            self.root,
+            text='Voltar',
+            font=('Calibri', '12'),
+            width=20,
+            command=self.run
+        ).pack()
+    
+    def tela_menu(self, usuario):
+        self.clear(self.root)
+        VisualizadorMenu(usuario, self.root).inicio()
+        tk.Button(
+            self.root,
+            text='Voltar',
+            font=('Calibri', '12'),
+            width=20,
+            command=self.run
+        ).pack()
 
-                flag = True
-                break
-        if flag == False:
-            print('nao achei')
-            self.confirmar = Label (master, text= 'Erro de autenticação!', font =('Bahnschrift Light SemiCondensed', 15,'bold'),fg='green')
-            self.confirmar.pack()
-            master.after(2000, self.confirmar.destroy)
-
-
-        file.close()            
-            
-
-root = Tk()
-root.geometry('900x700')
-Application(root)
-root.mainloop()
-
+a = VisualizadorLogin()
+a.run()
+a.root.mainloop()

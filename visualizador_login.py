@@ -51,7 +51,7 @@ class VisualizadorLogin(Visualizador):
             text='Cadastrar-se',
             font=('Calibri', '12'),
             width=20,
-            command=lambda: self.cadastro(self.root)
+            command=lambda: self.cadastro()
         ).pack()
 
     def cadastro(self):
@@ -110,26 +110,27 @@ class VisualizadorLogin(Visualizador):
             text='Cadastrar',
             font=('Calibri', '12'),
             width=20,
-            command=lambda: self.faz_cadastro(nome.get(), senha.get(), confirma_senha.get()))
+            command=lambda: self.faz_cadastro(nome.get(), senha.get(), confirma_senha.get())
+            ).pack()
 
         tk.Button(
             self.root,
             text='Voltar',
             font=('Calibri', '12'),
             width=20,
-            command=lambda: self.__init__(self.root)
+            command=self.run
         ).pack()
 
     def faz_cadastro(self, nome, senha, confirma):
-        self.cadastro(self.root)
+        self.cadastro()
 
         if senha == confirma:
             self.controlador_login.cadastrar(nome, senha)
 
-            self.confirmar = tk.Label(self.root, text='Cadastro concluído com sucesso!', font=(
+            confirmar = tk.Label(self.root, text='Cadastro concluído com sucesso!', font=(
                 'Bahnschrift Light SemiCondensed', 15, 'bold'), fg='green')
-            self.confirmar.pack()
-            self.root.after(2000, self.confirmar.destroy)
+            confirmar.pack()
+            self.root.after(2000, confirmar.destroy)
 
         else:
             confirmar = tk.Label(
@@ -151,7 +152,7 @@ class VisualizadorLogin(Visualizador):
                 fg='green'
             )
             confirmar.pack()
-            self.root.after(2000, self.confirmar.destroy)
+            self.root.after(2000, confirmar.destroy)
 
         else:
             confirmar = tk.Label(

@@ -1,11 +1,13 @@
 import tkinter as tk
 from visualizador import Visualizador
+from controlador_login import ControladorLogin
 
 
 class VisualizadorLogin(Visualizador):
 
     def __init__(self, root=None):
         super().__init__(root)
+        self.controlador_login = ControladorLogin()
 
     def run(self):
         self.clear(self.root)
@@ -122,10 +124,7 @@ class VisualizadorLogin(Visualizador):
         self.cadastro(self.root)
 
         if senha == confirma:
-            file = open("teste.txt", "a")
-            file.write(str(nome + ' ' + senha))
-            file.write('\n')
-            file.close()
+            self.controlador_login.cadastrar(nome, senha)
 
             self.confirmar = tk.Label(self.root, text='Cadastro concluído com sucesso!', font=(
                 'Bahnschrift Light SemiCondensed', 15, 'bold'), fg='green')
@@ -133,35 +132,28 @@ class VisualizadorLogin(Visualizador):
             self.root.after(2000, self.confirmar.destroy)
 
         else:
-            confirmar = tk.Label(self.root,
-                                 text='As senhas devem ser iguais!',
-                                 font=('Bahnschrift Light SemiCondensed',
-                                       15, 'bold'),
-                                 fg='red'
-                                 ).pack()
+            confirmar = tk.Label(
+                self.root,
+                text='As senhas devem ser iguais!',
+                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                fg='red'
+            )
+            confirmar.pack()
 
             self.root.after(2000, confirmar.destroy)
 
     def verificaSenha(self, nome, senha):
+        if self.controlador_login.verificar_senha(nome, senha):
+            confirmar = tk.Label(
+                self.root,
+                text='Usuário autenticado!',
+                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                fg='green'
+            )
+            confirmar.pack()
+            self.root.after(2000, self.confirmar.destroy)
 
-        file = open("teste.txt", "r")
-        texto = file.readlines()
-        flag = False
-        for linha1 in texto:
-            if str(nome + ' ' + senha) in linha1:
-                print('achei')
-                tk.Label(
-                    self.root,
-                    text='Usuário autenticado!',
-                    font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                    fg='green'
-                ).pack()
-                self.root.after(2000, self.confirmar.destroy)
-
-                flag = True
-                break
-        if flag == False:
-            print('nao achei')
+        else:
             confirmar = tk.Label(
                 self.root,
                 text='Erro de autenticação!',
@@ -169,8 +161,6 @@ class VisualizadorLogin(Visualizador):
                 fg='green'
             ).pack()
             self.root.after(2000, confirmar.destroy)
-
-        file.close()
 
 
 root = tk.Tk()

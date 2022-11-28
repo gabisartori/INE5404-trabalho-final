@@ -56,6 +56,7 @@ class Menu(Visualizador):
         visualizador.run(self.root)
         tk.Button(self.root, text="voltar", command=self.inicio).pack()
 
-a= Menu("gabriel")
-a.inicio()
-a.root.mainloop()
+if __name__ == "__main__":
+    a= Menu("gabriel")
+    a.inicio()
+    a.root.mainloop()

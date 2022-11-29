@@ -1,8 +1,10 @@
 from modelo_usuario import Usuario
-import random
+from controlador_usuario import ControladorUsuario
 
-class ControladorCadastro:
-    def __init__(self) -> None:
+class ControladorCadastro(ControladorUsuario):
+    def __init__(self, db="usuarios") -> None:
+        super().__init__(db)
+        self.conectar_banco()
         with open("contador.txt", "r") as file:
             self.contador_id = int(file.read())
 

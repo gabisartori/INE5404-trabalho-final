@@ -62,34 +62,31 @@ class VisualizadorLogin(Visualizador):
             command=self.tela_cadastro
         ).pack()
 
-    def login(self, nome, senha):
-        for usuario in self.controlador_usuario.usuarios:
-            if usuario["nome"] == nome:
-                salted_hash = hash_password(senha, usuario["salt"])
-                if self.controlador_login.verificar_senha(nome, salted_hash):
-                    self.tela_menu(nome)
-                    return
-
-            
-                else:
-                    confirmar = tk.Label(
-                        self.root,
-                        text='Senha incorreta!',
-                        font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                        fg='green'
-                    )
-                    confirmar.pack()
-                    self.root.after(2000, confirmar.destroy)
-                    return
-
-        confirmar = tk.Label(
-            self.root,
-            text='Usuário não cadastrado!',
-            font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-            fg='green'
-        )
-        confirmar.pack()
-        self.root.after(2000, confirmar.destroy)
+    def login(self, nome, senha) -> None:
+        usuario = self.controlador_usuario.buscar_usuario_por_nome(nome)
+        print(usuario)
+        if not isinstance(usuario, str):
+            salted_hash = hash_password(senha, usuario.salt)
+            if usuario.salted_hash == salted_hash:
+                self.tela_menu(nome)
+            else:
+                confirmar = tk.Label(
+                    self.root,
+                    text='Senha incorreta!',
+                    font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                    fg='green'
+                )
+                confirmar.pack()
+                self.root.after(2000, confirmar.destroy)
+        else:
+            confirmar = tk.Label(
+                self.root,
+                text='Usuário não cadastrado!',
+                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                fg='green'
+            )
+            confirmar.pack()
+            self.root.after(2000, confirmar.destroy)
 
 
     def tela_cadastro(self):

@@ -1,11 +1,17 @@
 import tkinter as tk
 from visualizador import Visualizador
-from controlador_login import ControladorLogin
+from controlador_cadastro import ControladorCadastro
+import random, hashlib
+
+
+def hash_password(password: str, salt: str):
+    return hashlib.sha256((password + salt).encode()).hexdigest()
+
 
 class VisualizadorCadastro(Visualizador):
     def __init__(self, root=None) -> None:
         super().__init__(root)
-        self.controlador_login = ControladorLogin()
+        self.controlador = ControladorCadastro()
     
     def run(self):
         self.clear(self.root)
@@ -70,8 +76,8 @@ class VisualizadorCadastro(Visualizador):
         self.run()
 
         if senha == confirma:
-            self.controlador_login.cadastrar(nome, senha)
-
+            sal = str(random.randint(1, 1_000_000))
+            self.controlador.cadastrar(nome, sal, hash_password(senha, sal))
             confirmar = tk.Label(self.root, text='Cadastro concluído com sucesso!', font=(
                 'Bahnschrift Light SemiCondensed', 15, 'bold'), fg='green')
             confirmar.pack()

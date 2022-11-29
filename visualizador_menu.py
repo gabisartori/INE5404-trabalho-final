@@ -3,12 +3,15 @@ from visualizador_livro import VisualizadorLivro
 from visualizador_diario import VisualizadorDiario
 from visualizador import Visualizador
 from controlador_livro import ControladorLivro
+from controlador_usuario import ControladorUsuario
 
 class VisualizadorMenu(Visualizador):
     def __init__(self, usuario: str, root: tk.Tk=None) -> None:
         super().__init__(root)
         self.usuario: str = usuario
         self.controlador_livro = ControladorLivro()
+        self.controlador_usuario = ControladorUsuario()
+        self.controlador_usuario.conectar_banco()
 
     def run(self):
         """Constrói a tela"""
@@ -42,6 +45,12 @@ class VisualizadorMenu(Visualizador):
             self.root,
             text="Diário",
             command=self.diario
+        ).pack()
+
+        tk.Button(
+            self.root,
+            text="Deletar conta",
+            command=lambda: self.controlador_usuario.remover_usuario(self.usuario)
         ).pack()
 
     def livro(self, livro: str) -> None:

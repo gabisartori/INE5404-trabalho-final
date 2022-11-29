@@ -3,7 +3,7 @@ from visualizador import Visualizador
 from controlador_cadastro import ControladorCadastro
 import random, hashlib
 
-
+# Ainda não sei onde botar essa função, talvez um método abstrato na classe Visualizador
 def hash_password(password: str, salt: str):
     return hashlib.sha256((password + salt).encode()).hexdigest()
 
@@ -14,6 +14,7 @@ class VisualizadorCadastro(Visualizador):
         self.controlador = ControladorCadastro()
     
     def run(self):
+        """Constrói a tela"""
         self.clear(self.root)
 
         tk.Label(
@@ -72,14 +73,20 @@ class VisualizadorCadastro(Visualizador):
             command=lambda: self.faz_cadastro(nome.get(), senha.get(), confirma_senha.get())
             ).pack()
     
-    def faz_cadastro(self, nome, senha, confirma):
+    def faz_cadastro(self, nome: str, senha: str, confirma: str) -> None:
+        """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
         self.run()
 
         if senha == confirma:
             sal = str(random.randint(1, 1_000_000))
             self.controlador.cadastrar(nome, sal, hash_password(senha, sal))
-            confirmar = tk.Label(self.root, text='Cadastro concluído com sucesso!', font=(
-                'Bahnschrift Light SemiCondensed', 15, 'bold'), fg='green')
+            
+            confirmar = tk.Label(
+                self.root,
+                text='Cadastro concluído com sucesso!',
+                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
+                fg='green'
+                )
             confirmar.pack()
             self.root.after(2000, confirmar.destroy)
 

@@ -7,7 +7,7 @@ class ControladorTextoAudio:
     def __init__(self) -> None:
         self.idioma = "pt-BR"
 
-    def setIdioma(self, idioma) -> None:
+    def setIdioma(self, idioma: str) -> None:
         self.idioma = idioma
 
     def ler_texto(self, texto: str):
@@ -23,5 +23,6 @@ class ControladorTextoAudio:
         mixer.music.load(mp3_p, 'mp3')
         mixer.music.play()
 
-    def parar_leitura(self) -> None:
+    @staticmethod
+    def parar_leitura() -> None:
         mixer.music.stop()

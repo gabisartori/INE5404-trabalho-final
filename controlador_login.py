@@ -6,9 +6,9 @@ class ControladorLogin(ControladorUsuario):
         super().__init__(db)
         self.conectar_banco()
     
-    def verificar_senha(self, nome, salted_hash):
+    def verificar_senha(self, nome: str, salted_hash: str) -> bool:
+        """Checa se a hash calculada (passada nos parâmetros) bate com a hash salva no banco de dados"""
         usuario = self.buscar_usuario_por_nome(nome)
         if isinstance(usuario, str):
             return False
-        if usuario.salted_hash == salted_hash:
-            return True
+        return usuario.salted_hash == salted_hash

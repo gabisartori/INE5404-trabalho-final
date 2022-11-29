@@ -97,5 +97,5 @@ class VisualizadorLivro(Visualizador):
         ).pack(in_=botoes_controle_audio, side=tk.RIGHT)
 
 
-    def editar_pagina(self, pagina, texto):
+    def editar_pagina(self, pagina: int, texto: str) -> str:
         return "Você não pode editar uma página de um livro"

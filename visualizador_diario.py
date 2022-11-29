@@ -4,7 +4,7 @@ from controlador_texto_audio import ControladorTextoAudio
 import tkinter as tk
 
 class VisualizadorDiario(Visualizador):
-    def __init__(self, usuario: str, root: Visualizador = None) -> None:
+    def __init__(self, usuario: str, root: Visualizador=None) -> None:
         super().__init__(root)
         self.controlador_diario = ControladorDiario(usuario)
         self.controlador_audio = ControladorTextoAudio()
@@ -21,7 +21,7 @@ class VisualizadorDiario(Visualizador):
         if contador: contador["text"]=f"Página {self.pagina_atual+1} / {len(self.controlador_diario.diario)}"
     
     def run(self) -> None:
-        '''Constroi a tela e inicia o loop'''
+        """Constroi a tela"""
         # Comandos dos botões
         def voltar_pagina(textbox, contador):
             if self.pagina_anterior():

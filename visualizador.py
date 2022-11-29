@@ -1,5 +1,9 @@
 import tkinter as tk
 
+# Criar duas subclasses de Visualizador
+# uma para manipulação de usuário (Login e Cadastro)
+# outra o uso do programa (Livros e Diário)
+
 class Visualizador:
     def __init__(self, root=None) -> None:
         self.pagina_atual: int = 0
@@ -18,7 +22,7 @@ class Visualizador:
     def get_pagina_atual(self) -> int:
         return self.pagina_atual
 
-    def set_pagina_atual(self, pagina) -> None:
+    def set_pagina_atual(self, pagina: int) -> None:
         self.pagina_atual = pagina
 
     def pagina_anterior(self) -> bool:
@@ -28,18 +32,18 @@ class Visualizador:
             return True
         return False
     
-    def pagina_seguinte(self, total_paginas) -> bool:
+    def pagina_seguinte(self, total_paginas: int) -> bool:
         '''Tenta avançar uma página, retorna True se a página atual não for a última'''
         if self.pagina_atual < total_paginas - 1:
             self.pagina_atual += 1
             return True
         return False
     
-    def editar_pagina(self, pagina, texto) -> None:
+    def editar_pagina(self, pagina: int, texto: str) -> None:
         '''\o/'''
         print("Página do que?")
     
-    def aviso(self, window, texto) -> None:
+    def aviso(self, window: tk.Tk, texto: str) -> None:
         '''Exibe uma mensagem em vermelho no fim da tela'''
         aviso = tk.Label(window, text=texto, fg="red")
         aviso.pack()

@@ -1,20 +1,25 @@
 from modelo_usuario import Usuario
 from controlador_usuario import ControladorUsuario
+import json
 
 class ControladorCadastro(ControladorUsuario):
-    def __init__(self, db="usuarios") -> None:
+    def __init__(self, db: str="usuarios") -> None:
         super().__init__(db)
         self.conectar_banco()
         with open("contador.txt", "r") as file:
             self.contador_id = int(file.read())
 
-    def cadastrar(self, nome, sal, senha_hash_sal):
-        user = Usuario(self.contador_id, nome, sal, senha_hash_sal)
+    def cadastrar(self, nome: str, sal: str, senha_hash_sal: str) -> Usuario | str:
+        """Recebe os dados do usuário, cria um objeto do tipo Usuario e o adiciona ao banco de dados"""
+        usuario = Usuario(self.contador_id, nome, sal, senha_hash_sal)
         self.contador_id += 1
         with open("contador.txt", "w") as file:
             file.write(str(self.contador_id))
         
+        # Parte a ser reescrita usando json
         file = open("teste.txt", "a")
-        file.write(f"{user.nome} {user.salt} {user.salted_hash}")
+        file.write(f"{usuario.nome} {usuario.salt} {usuario.salted_hash}")
         file.write('\n')
         file.close()
+
+        return usuario

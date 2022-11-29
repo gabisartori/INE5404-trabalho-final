@@ -18,6 +18,7 @@ class VisualizadorLogin(Visualizador):
         self.controlador_usuario.conectar_banco()
 
     def run(self):
+        """Constrói a tela"""
         self.clear(self.root)
 
         tk.Label(
@@ -62,9 +63,12 @@ class VisualizadorLogin(Visualizador):
             command=self.tela_cadastro
         ).pack()
 
-    def login(self, nome, senha) -> None:
-        usuario = self.controlador_usuario.buscar_usuario_por_nome(nome)
-        print(usuario)
+    def login(self, nome: str, senha: str) -> None:
+        """Verifica se o usuário existe e se a senha está correta, caso esteja, abre o menu do usuário"""
+        # Busca pelo usuário no banco de dados
+        usuario = self.controlador_login.buscar_usuario_por_nome(nome)
+
+        # Caso a busca por um usário não tenha retornado uma mensagem de erro
         if not isinstance(usuario, str):
             salted_hash = hash_password(senha, usuario.salt)
             if usuario.salted_hash == salted_hash:
@@ -78,10 +82,11 @@ class VisualizadorLogin(Visualizador):
                 )
                 confirmar.pack()
                 self.root.after(2000, confirmar.destroy)
+        # Caso a busca por um usário tenha retornado uma mensagem de erro
         else:
             confirmar = tk.Label(
                 self.root,
-                text='Usuário não cadastrado!',
+                text=usuario,
                 font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
                 fg='green'
             )
@@ -89,7 +94,8 @@ class VisualizadorLogin(Visualizador):
             self.root.after(2000, confirmar.destroy)
 
 
-    def tela_cadastro(self):
+    def tela_cadastro(self) -> None:
+        """Contrói a tela de cadastro na janela atual, e um botão para voltar ao começo"""
         self.clear(self.root)
         VisualizadorCadastro(self.root).run()
         tk.Button(
@@ -100,7 +106,8 @@ class VisualizadorLogin(Visualizador):
             command=self.run
         ).pack()
     
-    def tela_menu(self, usuario):
+    def tela_menu(self, usuario) -> None:
+        """Contrói a tela de menu na janela atual, e um botão para voltar ao começo"""
         self.clear(self.root)
         VisualizadorMenu(usuario, self.root).run()
         tk.Button(
@@ -111,6 +118,7 @@ class VisualizadorLogin(Visualizador):
             command=self.run
         ).pack()
 
-a = VisualizadorLogin()
-a.run()
-a.root.mainloop()
+if __name__ == "__main__":
+    a = VisualizadorLogin()
+    a.run()
+    a.root.mainloop()

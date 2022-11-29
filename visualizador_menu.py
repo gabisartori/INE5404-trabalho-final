@@ -5,12 +5,13 @@ from visualizador import Visualizador
 from controlador_livro import ControladorLivro
 
 class VisualizadorMenu(Visualizador):
-    def __init__(self, usuario: str, root: tk.Tk =None) -> None:
+    def __init__(self, usuario: str, root: tk.Tk=None) -> None:
         super().__init__(root)
         self.usuario: str = usuario
         self.controlador_livro = ControladorLivro()
 
     def run(self):
+        """Constrói a tela"""
         self.clear(self.root)
         self.root.geometry("1280x720")
         self.root.title("Menu")
@@ -43,14 +44,16 @@ class VisualizadorMenu(Visualizador):
             command=self.diario
         ).pack()
 
-    def livro(self, livro: str):
+    def livro(self, livro: str) -> None:
+        """Abre o livro escolhido e cria um botão para voltar ao menu"""
         self.clear(self.root)
         visualizador = VisualizadorLivro(livro, self.root)
         visualizador.run()
         tk.Button(self.root, text="voltar", command=self.run).pack()
 
 
-    def diario(self):
+    def diario(self) -> None:
+        """Abre o diário do usuário e cria um botão para voltar ao menu"""
         self.clear(self.root)
         visualizador = VisualizadorDiario(self.usuario, self.root)
         visualizador.run()

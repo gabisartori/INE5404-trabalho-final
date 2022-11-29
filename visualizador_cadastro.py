@@ -16,6 +16,7 @@ class VisualizadorCadastro(Visualizador):
     def run(self):
         """Constrói a tela"""
         self.clear(self.root)
+        self.root.geometry("1280x720")
 
         tk.Label(
             self.root,

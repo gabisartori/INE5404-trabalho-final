@@ -26,8 +26,19 @@ class ControladorUsuario:
     def cadastrar_usuario(self, usuario: Usuario) -> Usuario | str:
         pass
 
-    def atualizar_usuario(self, id: int, usuario: Usuario) -> Usuario | str:
-        pass
+    def atualizar_usuario(self, id: int, novo_nome: str, nova_senha: str) -> Usuario | str:
+        with open(f"{self.db}.json") as file:
+            usuarios = json.load(file)
+        
+        usuario = [usr for usr in usuarios if usr["id"] == id][0]
+        if novo_nome: usuario["nome"] = novo_nome
+        if nova_senha: 
+            usuario["salted_hash"] = nova_senha
+
+        with open(f"{self.db}.json", 'w') as file:
+            json.dump(usuarios, file)
+        
+        return usuario
 
     def remover_usuario(self, id_nome: int | str) -> Usuario | str:
         usuario = [usr for usr in self.usuarios if usr["nome"] == id_nome or usr["id"] == id_nome][0]

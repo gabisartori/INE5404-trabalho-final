@@ -11,13 +11,13 @@ class VisualizadorLogin(VisualizadorGerencia):
     def __init__(self, parent, root=None):
         super().__init__(parent, root)
         self.controlador_login = ControladorLogin()
-        self.controlador_usuario = ControladorUsuario("usuarios")
-        self.controlador_usuario.conectar_banco()
 
     def run(self):
         """Constrói a tela"""
         self.clear(self.root)
         self.root.geometry("1280x720")
+
+        self.controlador_login.conectar_banco()
 
         tk.Label(
             text="Menu",

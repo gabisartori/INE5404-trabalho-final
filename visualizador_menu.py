@@ -19,6 +19,9 @@ class VisualizadorMenu(VisualizadorGerencia):
         self.root.geometry("1280x720")
         self.root.title("Menu")
 
+        self.controlador_usuario.conectar_banco()
+
+
         tk.Label(
             self.root,
             text="Menu",
@@ -45,6 +48,36 @@ class VisualizadorMenu(VisualizadorGerencia):
             self.root,
             text="Diário",
             command=self.diario
+        ).pack()
+
+        tk.Label(
+            self.root,
+            text="Nome do usuário",
+            font=("Arial", 15)
+        ).pack()
+        nome = tk.Entry(
+            self.root,
+            width=25
+        )
+        nome.pack()
+        nome.insert(0, self.usuario)
+
+        nova_senha = tk.Entry(
+            self.root,
+            width=25
+        )
+        nova_senha.pack()
+
+        confirmar_senha = tk.Entry(
+            self.root,
+            width=25
+        )
+        confirmar_senha.pack()
+
+        tk.Button(
+            self.root,
+            text="Salvar alterações",
+            command=lambda: self.salvar_alteracoes(nome.get(), nova_senha.get(), confirmar_senha.get())
         ).pack()
 
         tk.Button(
@@ -74,6 +107,21 @@ class VisualizadorMenu(VisualizadorGerencia):
         self.clear(self.root)
         visualizador = VisualizadorDiario(self.usuario, self, self.root)
         visualizador.run()
+
+    def salvar_alteracoes(self, nome: str, nova_senha: str, confirmar_senha: str) -> None:
+        """Salva as alterações feitas no nome e na senha do usuário"""
+        if nova_senha == confirmar_senha:
+            usuario = self.controlador_usuario.buscar_usuario_por_nome(self.usuario)
+            nova_senha = self.hash_password(nova_senha, usuario.salt)
+            self.controlador_usuario.atualizar_usuario(usuario.id, nome, nova_senha)
+            self.usuario = nome
+            self.run()
+        else:
+            tk.Label(
+                self.root,
+                text="As senhas não coincidem",
+                font=("Arial", 15)
+            ).pack()
 
 if __name__ == "__main__":
     a= VisualizadorMenu("gabriel")

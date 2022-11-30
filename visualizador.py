@@ -8,23 +8,25 @@ class Visualizador:
         # Permite que os objetos sejam usados tanto como uma janela em si ou como um componente
         self.root: tk.Tk = root if root else tk.Tk()
     
-    def aviso(self, window: tk.Tk, texto: str) -> None:
-        '''Exibe uma mensagem em vermelho no fim da tela'''
+    @staticmethod
+    def aviso(window: tk.Tk, texto: str) -> None:
+        """Exibe uma mensagem em vermelho no fim da tela"""
         aviso = tk.Label(window, text=texto, fg="red")
         aviso.pack()
         window.after(2000, aviso.destroy)
     
     @staticmethod    
     def clear(window) -> None:
-        '''Remove todo o conteúdo de uma janela'''
+        """Remove todo o conteúdo de uma janela"""
         for widget in window.winfo_children():
             widget.destroy()
     
     @staticmethod
     def update_texto(textbox: dict, new_text: str) -> None:
-        '''Atualiza o item "text" de um dicionário'''
+        """Atualiza o item "text" de um dicionário"""
         textbox["text"] = new_text
-    
+
+
 class VisualizadorGerencia(Visualizador):
     def __init__(self, parent, root=None) -> None:
         super().__init__(parent, root)
@@ -47,19 +49,19 @@ class VisualizadorLeitura(Visualizador):
         self.pagina_atual = pagina
 
     def pagina_anterior(self) -> bool:
-        '''Tenta voltar uma página, retorna True se a página atual não for a primeira'''
+        """Tenta voltar uma página, retorna True se a página atual não for a primeira"""
         if self.pagina_atual > 0:
             self.pagina_atual -= 1
             return True
         return False
     
     def pagina_seguinte(self, total_paginas: int) -> bool:
-        '''Tenta avançar uma página, retorna True se a página atual não for a última'''
+        """Tenta avançar uma página, retorna True se a página atual não for a última"""
         if self.pagina_atual < total_paginas - 1:
             self.pagina_atual += 1
             return True
         return False
     
     def editar_pagina(self, pagina: int, texto: str) -> None:
-        '''\o/'''
+        """\o/"""
         print("Página do que?")

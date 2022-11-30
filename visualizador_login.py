@@ -3,7 +3,6 @@ from visualizador import VisualizadorGerencia
 from visualizador_cadastro import VisualizadorCadastro
 from visualizador_menu import VisualizadorMenu
 from controlador_login import ControladorLogin
-from controlador_usuario import ControladorUsuario
 
 
 class VisualizadorLogin(VisualizadorGerencia):
@@ -100,7 +99,6 @@ class VisualizadorLogin(VisualizadorGerencia):
             confirmar.pack()
             self.root.after(2000, confirmar.destroy)
 
-
     def tela_cadastro(self) -> None:
         """Contrói a tela de cadastro na janela atual, e um botão para voltar ao começo"""
         self.clear(self.root)
@@ -110,6 +108,7 @@ class VisualizadorLogin(VisualizadorGerencia):
         """Contrói a tela de menu na janela atual, e um botão para voltar ao começo"""
         self.clear(self.root)
         VisualizadorMenu(usuario, self, self.root).run()
+
 
 if __name__ == "__main__":
     a = VisualizadorLogin(None)

@@ -5,8 +5,9 @@ from visualizador import VisualizadorGerencia
 from controlador_livro import ControladorLivro
 from controlador_usuario import ControladorUsuario
 
+
 class VisualizadorMenu(VisualizadorGerencia):
-    def __init__(self, usuario: str, parent, root: tk.Tk=None) -> None:
+    def __init__(self, usuario: str, parent, root: tk.Tk = None) -> None:
         super().__init__(parent, root)
         self.usuario: str = usuario
         self.controlador_livro = ControladorLivro()
@@ -18,9 +19,7 @@ class VisualizadorMenu(VisualizadorGerencia):
         self.clear(self.root)
         self.root.geometry("1280x720")
         self.root.title("Menu")
-
         self.controlador_usuario.conectar_banco()
-
 
         tk.Label(
             self.root,
@@ -40,7 +39,7 @@ class VisualizadorMenu(VisualizadorGerencia):
             tk.Button(
                 self.root,
                 text=titulo,
-                command=lambda : self.livro(arquivo),
+                command=lambda: self.livro(arquivo),
                 width=25
             ).pack()
 
@@ -95,7 +94,6 @@ class VisualizadorMenu(VisualizadorGerencia):
                 command=self.parent.run
             ).pack()
 
-
     def livro(self, livro: str) -> None:
         """Abre o livro escolhido e cria um botão para voltar ao menu"""
         self.clear(self.root)
@@ -123,7 +121,8 @@ class VisualizadorMenu(VisualizadorGerencia):
                 font=("Arial", 15)
             ).pack()
 
+
 if __name__ == "__main__":
-    a= VisualizadorMenu("gabriel")
+    a = VisualizadorMenu("gabriel", None)
     a.run()
     a.root.mainloop()

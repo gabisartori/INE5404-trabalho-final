@@ -1,5 +1,5 @@
-from modelo_usuario import Usuario
 from controlador_usuario import ControladorUsuario
+
 
 class ControladorLogin(ControladorUsuario):
     def __init__(self, db="usuarios") -> None:

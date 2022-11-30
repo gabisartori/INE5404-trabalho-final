@@ -1,10 +1,11 @@
 from modelo_usuario import Usuario
 import json
 
+
 class ControladorUsuario:
     def __init__(self, db="usuarios") -> None:
         self.db = db
-        self.usuarios: list = None
+        self.usuarios: list | None = None
 
     def conectar_banco(self) -> None:
         """Atualiza a lista de usuários se baseando no banco de dados"""
@@ -27,13 +28,14 @@ class ControladorUsuario:
             usuarios = json.load(file)
         
         usuario = [usr for usr in usuarios if usr["id"] == id][0]
-        if novo_nome: usuario["nome"] = novo_nome
+        if novo_nome:
+            usuario["nome"] = novo_nome
         if nova_senha: 
             usuario["salted_hash"] = nova_senha
 
         with open(f"{self.db}.json", 'w') as file:
             json.dump(usuarios, file)
-        
+
         return usuario
 
     def remover_usuario(self, id_nome: int | str) -> Usuario | str:

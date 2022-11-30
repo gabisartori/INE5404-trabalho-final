@@ -83,7 +83,7 @@ class VisualizadorCadastro(VisualizadorGerencia):
         """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
         if senha == confirma:
             sal = str(random.randint(1, 1_000_000))
-            self.controlador.cadastrar(nome, sal, self.hash_password(senha, sal))
+            self.controlador.cadastrar_usuario(nome, sal, self.hash_password(senha, sal))
             
             confirmar = tk.Label(
                 self.root,

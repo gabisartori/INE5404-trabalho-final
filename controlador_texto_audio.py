@@ -1,7 +1,6 @@
 from io import BytesIO
 from gtts import gTTS
 from pygame import mixer
-from time import sleep
 
 class ControladorTextoAudio:
     def __init__(self) -> None:
@@ -10,7 +9,7 @@ class ControladorTextoAudio:
     def setIdioma(self, idioma: str) -> None:
         self.idioma = idioma
 
-    def ler_texto(self, texto: str):
+    def ler_texto(self, texto: str) -> None:
         '''Toca o áudio do texto'''
         if isinstance(texto, list):
             texto = ' '.join(texto)

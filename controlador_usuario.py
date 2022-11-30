@@ -22,10 +22,6 @@ class ControladorUsuario:
                 return Usuario(usuario['id'], usuario['nome'], usuario['salt'], usuario['salted_hash'])
         return "Usuário não encontrado"
 
-    # Fazer no controlador de Cadastro
-    def cadastrar_usuario(self, usuario: Usuario) -> Usuario | str:
-        pass
-
     def atualizar_usuario(self, id: int, novo_nome: str, nova_senha: str) -> Usuario | str:
         with open(f"{self.db}.json") as file:
             usuarios = json.load(file)

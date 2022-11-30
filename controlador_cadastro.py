@@ -1,6 +1,6 @@
 from modelo_usuario import Usuario
 from controlador_usuario import ControladorUsuario
-import json
+
 
 class ControladorCadastro(ControladorUsuario):
     def __init__(self, db: str="usuarios") -> None:
@@ -9,9 +9,11 @@ class ControladorCadastro(ControladorUsuario):
         with open("contador.txt", "r") as file:
             self.contador_id = int(file.read())
 
-    def cadastrar(self, nome: str, sal: str, senha_hash_sal: str) -> Usuario | str:
+    def cadastrar_usuario(self, nome: str, sal: str, senha_hash_sal: str) -> Usuario | str:
         """Recebe os dados do usuário, cria um objeto do tipo Usuario e o adiciona ao banco de dados"""
         usuario = Usuario(self.contador_id, nome, sal, senha_hash_sal)
+        
+        # Incrementa o contador de id
         self.contador_id += 1
         with open("contador.txt", "w") as file:
             file.write(str(self.contador_id))

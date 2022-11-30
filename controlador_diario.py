@@ -35,12 +35,3 @@ class ControladorDiario:
 
     def ler_pagina(self, n: int) -> PaginaDiario:
         return PaginaDiario(str(n), self.usuario, self.diario[n]["texto"])
-    
-    def criar_pagina(self):
-        pass
-
-    def remover_pagina(self):
-        pass
-
-    def alterar_pagina(self):
-        pass

@@ -6,8 +6,8 @@ from controlador_livro import ControladorLivro
 from controlador_usuario import ControladorUsuario
 
 class VisualizadorMenu(Visualizador):
-    def __init__(self, usuario: str, root: tk.Tk=None) -> None:
-        super().__init__(root)
+    def __init__(self, usuario: str, parent, root: tk.Tk=None) -> None:
+        super().__init__(parent, root)
         self.usuario: str = usuario
         self.controlador_livro = ControladorLivro()
         self.controlador_usuario = ControladorUsuario()
@@ -53,20 +53,27 @@ class VisualizadorMenu(Visualizador):
             command=lambda: self.controlador_usuario.remover_usuario(self.usuario)
         ).pack()
 
+        if self.parent:
+            tk.Button(
+                self.root,
+                text='Voltar',
+                font=('Calibri', '12'),
+                width=20,
+                command=self.parent.run
+            ).pack()
+
+
     def livro(self, livro: str) -> None:
         """Abre o livro escolhido e cria um botão para voltar ao menu"""
         self.clear(self.root)
-        visualizador = VisualizadorLivro(livro, self.root)
+        visualizador = VisualizadorLivro(livro, self, self.root)
         visualizador.run()
-        tk.Button(self.root, text="voltar", command=self.run).pack()
-
 
     def diario(self) -> None:
         """Abre o diário do usuário e cria um botão para voltar ao menu"""
         self.clear(self.root)
-        visualizador = VisualizadorDiario(self.usuario, self.root)
+        visualizador = VisualizadorDiario(self.usuario, self, self.root)
         visualizador.run()
-        tk.Button(self.root, text="voltar", command=self.run).pack()
 
 if __name__ == "__main__":
     a= VisualizadorMenu("gabriel")

@@ -5,7 +5,8 @@ import tkinter as tk
 # outra o uso do programa (Livros e Diário)
 
 class Visualizador:
-    def __init__(self, root=None) -> None:
+    def __init__(self, parent, root=None) -> None:
+        self.parent = parent
         self.pagina_atual: int = 0
         self.total_paginas: int = 0
         

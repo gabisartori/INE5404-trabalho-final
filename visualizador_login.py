@@ -11,8 +11,8 @@ def hash_password(password: str, salt: str):
 
 class VisualizadorLogin(Visualizador):
 
-    def __init__(self, root=None):
-        super().__init__(root)
+    def __init__(self, parent, root=None):
+        super().__init__(parent, root)
         self.controlador_login = ControladorLogin()
         self.controlador_usuario = ControladorUsuario("usuarios")
         self.controlador_usuario.conectar_banco()
@@ -64,6 +64,15 @@ class VisualizadorLogin(Visualizador):
             command=self.tela_cadastro
         ).pack()
 
+        if self.parent:
+            tk.Button(
+                self.root,
+                text='Voltar',
+                font=('Calibri', '12'),
+                width=20,
+                command=self.parent.run
+            ).pack()
+
     def login(self, nome: str, senha: str) -> None:
         """Verifica se o usuário existe e se a senha está correta, caso esteja, abre o menu do usuário"""
         # Busca pelo usuário no banco de dados
@@ -98,28 +107,14 @@ class VisualizadorLogin(Visualizador):
     def tela_cadastro(self) -> None:
         """Contrói a tela de cadastro na janela atual, e um botão para voltar ao começo"""
         self.clear(self.root)
-        VisualizadorCadastro(self.root).run()
-        tk.Button(
-            self.root,
-            text='Voltar',
-            font=('Calibri', '12'),
-            width=20,
-            command=self.run
-        ).pack()
-    
+        VisualizadorCadastro(self, self.root).run()
+        
     def tela_menu(self, usuario) -> None:
         """Contrói a tela de menu na janela atual, e um botão para voltar ao começo"""
         self.clear(self.root)
-        VisualizadorMenu(usuario, self.root).run()
-        tk.Button(
-            self.root,
-            text='Voltar',
-            font=('Calibri', '12'),
-            width=20,
-            command=self.run
-        ).pack()
+        VisualizadorMenu(usuario, self, self.root).run()
 
 if __name__ == "__main__":
-    a = VisualizadorLogin()
+    a = VisualizadorLogin(None)
     a.run()
     a.root.mainloop()

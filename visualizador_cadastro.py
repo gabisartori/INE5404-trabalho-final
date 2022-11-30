@@ -9,8 +9,8 @@ def hash_password(password: str, salt: str):
 
 
 class VisualizadorCadastro(Visualizador):
-    def __init__(self, root=None) -> None:
-        super().__init__(root)
+    def __init__(self, parent, root=None) -> None:
+        super().__init__(parent, root)
         self.controlador = ControladorCadastro()
     
     def run(self):
@@ -73,7 +73,16 @@ class VisualizadorCadastro(Visualizador):
             width=20,
             command=lambda: self.faz_cadastro(nome.get(), senha.get(), confirma_senha.get())
             ).pack()
-    
+
+        if self.parent:
+            tk.Button(
+                self.root,
+                text='Voltar',
+                font=('Calibri', '12'),
+                width=20,
+                command=self.parent.run
+            ).pack()
+
     def faz_cadastro(self, nome: str, senha: str, confirma: str) -> None:
         """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
         if senha == confirma:

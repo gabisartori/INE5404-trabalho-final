@@ -4,8 +4,8 @@ from controlador_texto_audio import ControladorTextoAudio
 import tkinter as tk
 
 class VisualizadorDiario(Visualizador):
-    def __init__(self, usuario: str, root: Visualizador=None) -> None:
-        super().__init__(root)
+    def __init__(self, usuario: str, parent, root: Visualizador=None) -> None:
+        super().__init__(parent, root)
         self.controlador_diario = ControladorDiario(usuario)
         self.controlador_audio = ControladorTextoAudio()
         self.controlador_diario.conectar()
@@ -95,6 +95,15 @@ class VisualizadorDiario(Visualizador):
             text="Salvar",
             command= lambda: self.controlador_diario.salvar_pagina(self.pagina_atual, [text_line.get() for text_line in textbox])
         ).pack()
+
+        if self.parent:
+            tk.Button(
+                self.root,
+                text='Voltar',
+                font=('Calibri', '12'),
+                width=20,
+                command=self.parent.run
+            ).pack()
 
         # Carrega a página pela primeira vez
         self.renderizar_tela(textbox, contador)

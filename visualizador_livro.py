@@ -5,8 +5,8 @@ from controlador_livro import ControladorLivro
 from controlador_texto_audio import ControladorTextoAudio
 
 class VisualizadorLivro(Visualizador):
-    def __init__(self, livro, root=None) -> None:
-        super().__init__(root)
+    def __init__(self, livro, parent, root=None) -> None:
+        super().__init__(parent, root)
         self.controlador_livro = ControladorLivro()
         self.controlador_livro.conectar_livro(livro)
         self.controlador_audio = ControladorTextoAudio()
@@ -95,6 +95,15 @@ class VisualizadorLivro(Visualizador):
             text="Parar",
             command= lambda: ControladorTextoAudio().parar_leitura()
         ).pack(in_=botoes_controle_audio, side=tk.RIGHT)
+
+        if self.parent:
+            tk.Button(
+                self.root,
+                text='Voltar',
+                font=('Calibri', '12'),
+                width=20,
+                command=self.parent.run
+            ).pack()
 
 
     def editar_pagina(self, pagina: int, texto: str) -> str:

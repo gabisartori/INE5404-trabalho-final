@@ -1,11 +1,11 @@
 import tkinter as tk
 from visualizador_livro import VisualizadorLivro
 from visualizador_diario import VisualizadorDiario
-from visualizador import Visualizador
+from visualizador import VisualizadorGerencia
 from controlador_livro import ControladorLivro
 from controlador_usuario import ControladorUsuario
 
-class VisualizadorMenu(Visualizador):
+class VisualizadorMenu(VisualizadorGerencia):
     def __init__(self, usuario: str, parent, root: tk.Tk=None) -> None:
         super().__init__(parent, root)
         self.usuario: str = usuario

@@ -1,14 +1,10 @@
 import tkinter as tk
-from visualizador import Visualizador
+from visualizador import VisualizadorGerencia
 from controlador_cadastro import ControladorCadastro
-import random, hashlib
-
-# Ainda não sei onde botar essa função, talvez um método abstrato na classe Visualizador
-def hash_password(password: str, salt: str):
-    return hashlib.sha256((password + salt).encode()).hexdigest()
+import random
 
 
-class VisualizadorCadastro(Visualizador):
+class VisualizadorCadastro(VisualizadorGerencia):
     def __init__(self, parent, root=None) -> None:
         super().__init__(parent, root)
         self.controlador = ControladorCadastro()
@@ -87,7 +83,7 @@ class VisualizadorCadastro(Visualizador):
         """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
         if senha == confirma:
             sal = str(random.randint(1, 1_000_000))
-            self.controlador.cadastrar(nome, sal, hash_password(senha, sal))
+            self.controlador.cadastrar(nome, sal, self.hash_password(senha, sal))
             
             confirmar = tk.Label(
                 self.root,

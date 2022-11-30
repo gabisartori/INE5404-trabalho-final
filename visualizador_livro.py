@@ -1,10 +1,10 @@
 import tkinter as tk
 
-from visualizador import Visualizador
+from visualizador import VisualizadorLeitura
 from controlador_livro import ControladorLivro
 from controlador_texto_audio import ControladorTextoAudio
 
-class VisualizadorLivro(Visualizador):
+class VisualizadorLivro(VisualizadorLeitura):
     def __init__(self, livro, parent, root=None) -> None:
         super().__init__(parent, root)
         self.controlador_livro = ControladorLivro()

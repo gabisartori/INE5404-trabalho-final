@@ -1,25 +1,45 @@
 import tkinter as tk
+import hashlib
 
-# Criar duas subclasses de Visualizador
-# uma para manipulação de usuário (Login e Cadastro)
-# outra o uso do programa (Livros e Diário)
 
 class Visualizador:
     def __init__(self, parent, root=None) -> None:
         self.parent = parent
-        self.pagina_atual: int = 0
-        self.total_paginas: int = 0
-        
         # Permite que os objetos sejam usados tanto como uma janela em si ou como um componente
         self.root: tk.Tk = root if root else tk.Tk()
-
+    
+    def aviso(self, window: tk.Tk, texto: str) -> None:
+        '''Exibe uma mensagem em vermelho no fim da tela'''
+        aviso = tk.Label(window, text=texto, fg="red")
+        aviso.pack()
+        window.after(2000, aviso.destroy)
+    
     @staticmethod    
     def clear(window) -> None:
         '''Remove todo o conteúdo de uma janela'''
         for widget in window.winfo_children():
             widget.destroy()
+    
+    @staticmethod
+    def update_texto(textbox: dict, new_text: str) -> None:
+        '''Atualiza o item "text" de um dicionário'''
+        textbox["text"] = new_text
+    
+class VisualizadorGerencia(Visualizador):
+    def __init__(self, parent, root=None) -> None:
+        super().__init__(parent, root)
+    
+    @staticmethod
+    def hash_password(password: str, salt: str):
+        return hashlib.sha256((password + salt).encode()).hexdigest()
 
 
+class VisualizadorLeitura(Visualizador):
+    def __init__(self, parent, root=None) -> None:
+        super().__init__(parent, root)
+        self.pagina_atual: int = 0
+        self.total_paginas: int = 0
+    
     def get_pagina_atual(self) -> int:
         return self.pagina_atual
 
@@ -43,14 +63,3 @@ class Visualizador:
     def editar_pagina(self, pagina: int, texto: str) -> None:
         '''\o/'''
         print("Página do que?")
-    
-    def aviso(self, window: tk.Tk, texto: str) -> None:
-        '''Exibe uma mensagem em vermelho no fim da tela'''
-        aviso = tk.Label(window, text=texto, fg="red")
-        aviso.pack()
-        window.after(2000, aviso.destroy)
-    
-    @staticmethod
-    def update_texto(textbox: dict, new_text: str) -> None:
-        '''Atualiza o item "text" de um dicionário'''
-        textbox["text"] = new_text

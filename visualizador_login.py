@@ -1,15 +1,12 @@
 import tkinter as tk
-from visualizador import Visualizador
+from visualizador import VisualizadorGerencia
 from visualizador_cadastro import VisualizadorCadastro
 from visualizador_menu import VisualizadorMenu
 from controlador_login import ControladorLogin
 from controlador_usuario import ControladorUsuario
-import hashlib
 
-def hash_password(password: str, salt: str):
-    return hashlib.sha256((password + salt).encode()).hexdigest()
 
-class VisualizadorLogin(Visualizador):
+class VisualizadorLogin(VisualizadorGerencia):
 
     def __init__(self, parent, root=None):
         super().__init__(parent, root)
@@ -80,7 +77,7 @@ class VisualizadorLogin(Visualizador):
 
         # Caso a busca por um usário não tenha retornado uma mensagem de erro
         if not isinstance(usuario, str):
-            salted_hash = hash_password(senha, usuario.salt)
+            salted_hash = self.hash_password(senha, usuario.salt)
             if usuario.salted_hash == salted_hash:
                 self.tela_menu(nome)
             else:

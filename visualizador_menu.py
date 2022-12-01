@@ -82,7 +82,7 @@ class VisualizadorMenu(VisualizadorGerencia):
         tk.Button(
             self.root,
             text="Deletar conta",
-            command=lambda: self.controlador_usuario.remover_usuario(self.usuario)
+            command=lambda: self.remover_usuario(self.usuario)
         ).pack()
 
         if self.parent:
@@ -121,6 +121,10 @@ class VisualizadorMenu(VisualizadorGerencia):
                 font=("Arial", 15)
             ).pack()
 
+    def remover_usuario(self, usuario: str) -> None:
+        """Remove o usuário do sistema"""
+        self.controlador_usuario.remover_usuario(usuario)
+        self.parent.run()
 
 if __name__ == "__main__":
     a = VisualizadorMenu("gabriel", None)

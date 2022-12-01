@@ -19,9 +19,9 @@ class ControladorCadastro(ControladorUsuario):
             file.write(str(self.contador_id))
 
         # Parte a ser reescrita usando json
-        file = open("teste.txt", "a")
-        file.write(f"{usuario.nome} {usuario.salt} {usuario.salted_hash}")
-        file.write('\n')
-        file.close()
+
+        lista = [{'id':self.contador_id,'nome': nome,'salted': sal,'salted_hash': senha_hash_sal}][:]
+        with open('usuarios.json','w') as outfile:
+            json.dump(lista.copy(),outfile)
 
         return usuario

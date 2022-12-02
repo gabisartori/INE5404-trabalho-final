@@ -39,10 +39,13 @@ class VisualizadorMenu(VisualizadorGerencia):
         # Livros
         # Cria um botão com o nome de cada livro cadastrado no sistema
         for arquivo, titulo in self.controlador_livro.get_livros():
+            def call_book(arquivo=arquivo):
+                return lambda: self.livro(arquivo)
+            
             tk.Button(
                 self._root,
                 text=titulo,
-                command=lambda: self.livro(arquivo),
+                command=call_book(),
                 width=25
             ).pack()
 

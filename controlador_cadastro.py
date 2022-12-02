@@ -20,8 +20,12 @@ class ControladorCadastro(ControladorUsuario):
 
         # Parte a ser reescrita usando json
 
-        lista = [{'id':self.contador_id,'nome': nome,'salted': sal,'salted_hash': senha_hash_sal}][:]
-        with open('usuarios.json','w') as outfile:
-            json.dump(lista.copy(),outfile)
+       with open('usuarios.json') as file:
+            usuarios = json.load(file)
+        
+        usuarios.append({'id':self.contador_id,'nome': nome,'salt': sal,'salted_hash': senha_hash_sal})
+        print(usuarios)
+        with open('usuarios.json','w') as file:
+            json.dump(usuarios,file)
 
         return usuario

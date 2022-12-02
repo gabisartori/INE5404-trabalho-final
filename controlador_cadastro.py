@@ -2,6 +2,7 @@ from modelo_usuario import Usuario
 from controlador_usuario import ControladorUsuario
 import json 
 
+
 class ControladorCadastro(ControladorUsuario):
     def __init__(self, db: str = "usuarios") -> None:
         super().__init__(db)
@@ -17,8 +18,6 @@ class ControladorCadastro(ControladorUsuario):
         self.contador_id += 1
         with open("contador.txt", "w") as file:
             file.write(str(self.contador_id))
-
-        # Parte a ser reescrita usando json
 
         with open('usuarios.json') as file:
             usuarios = json.load(file)

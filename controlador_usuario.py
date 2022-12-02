@@ -9,8 +9,13 @@ class ControladorUsuario:
 
     def conectar_banco(self) -> None:
         """Atualiza a lista de usuários se baseando no banco de dados"""
-        with open(f"{self.__db}.json") as file:
-            self.__usuarios = json.load(file)
+        try:
+            with open(f"{self.__db}.json") as file:
+                self.__usuarios = json.load(file)
+        except FileNotFoundError:
+            with open(f"{self.__db}.json", 'w') as file:
+                json.dump([], file)
+            self.conectar_banco()
 
     def buscar_usuario_por_id(self, id: int) -> Usuario:
         for usuario in self.__usuarios:

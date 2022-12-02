@@ -110,7 +110,10 @@ class VisualizadorMenu(VisualizadorGerencia):
         """Salva as alterações feitas no nome e na senha do usuário"""
         if nova_senha == confirmar_senha:
             usuario = self.controlador_usuario.buscar_usuario_por_nome(self.usuario)
-            nova_senha = self.hash_password(nova_senha, usuario.salt)
+            if nova_senha: 
+                nova_senha = self.hash_password(nova_senha, usuario.salt)
+            else:
+                nova_senha = usuario.salted_hash
             self.controlador_usuario.atualizar_usuario(usuario.id, nome, nova_senha)
             self.usuario = nome
             self.run()

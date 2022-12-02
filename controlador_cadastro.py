@@ -20,7 +20,7 @@ class ControladorCadastro(ControladorUsuario):
 
         # Parte a ser reescrita usando json
 
-       with open('usuarios.json') as file:
+        with open('usuarios.json') as file:
             usuarios = json.load(file)
         
         usuarios.append({'id':self.contador_id,'nome': nome,'salt': sal,'salted_hash': senha_hash_sal})

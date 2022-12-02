@@ -11,4 +11,4 @@ class ControladorLogin(ControladorUsuario):
         usuario = self.buscar_usuario_por_nome(nome)
         if isinstance(usuario, str):
             return False
-        return usuario.salted_hash == salted_hash
+        return usuario.get_salted_hash() == salted_hash

@@ -1,6 +1,6 @@
 from modelo_usuario import Usuario
 from controlador_usuario import ControladorUsuario
-
+import json 
 
 class ControladorCadastro(ControladorUsuario):
     def __init__(self, db: str = "usuarios") -> None:

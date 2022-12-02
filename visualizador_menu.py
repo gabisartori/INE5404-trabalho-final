@@ -132,6 +132,7 @@ class VisualizadorMenu(VisualizadorGerencia):
         self.controlador_usuario.remover_usuario(usuario)
         self._parent.run()
 
+
 if __name__ == "__main__":
     a = VisualizadorMenu("gabriel", None)
     a.run()

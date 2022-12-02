@@ -115,4 +115,4 @@ class VisualizadorLogin(VisualizadorGerencia):
 if __name__ == "__main__":
     a = VisualizadorLogin(None)
     a.run()
-    a._root.mainloop()
+    a.get_root().mainloop()

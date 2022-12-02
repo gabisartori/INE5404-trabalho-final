@@ -25,4 +25,3 @@ class Usuario:
     
     def set_salted_hash(self, salted_hash: str) -> None:
         self.__salted_hash = salted_hash
-

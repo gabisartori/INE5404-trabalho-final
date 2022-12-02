@@ -24,8 +24,8 @@ class ControladorCadastro(ControladorUsuario):
         with open("contador.txt", "w") as file:
             file.write(str(self.__contador_id))
         
-        self.get_usuarios().append({'id':self.__contador_id,'nome': nome,'salt': sal,'salted_hash': senha_hash_sal})
-        with open(f'{self.get_db()}.json','w') as file:
+        self.get_usuarios().append({'id': self.__contador_id, 'nome': nome, 'salt': sal, 'salted_hash': senha_hash_sal})
+        with open(f'{self.get_db()}.json', 'w') as file:
             json.dump(self.get_usuarios(), file)
 
         return usuario

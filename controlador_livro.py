@@ -16,14 +16,14 @@ class ControladorLivro:
                 a = linha.split(';')
                 # Separa as informações dá página
                 # numero;título do livro;conteúdo
-                paginas.append([a[0], a[1], ' '.join(a[2:])])
+                paginas.append(Pagina(a[0], a[1], ' '.join(a[2:])))
             self.__livro = paginas
             arquivo.close()
         except FileNotFoundError:
             raise Exception("Livro não encontrado")
 
     def ler_pagina(self, n: int) -> Pagina:
-        return Pagina(n, self.__livro[n][1], self.__livro[n][2])
+        return self.__livro[n]
 
     @staticmethod
     def get_livros() -> list[str]:

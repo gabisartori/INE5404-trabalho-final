@@ -1,5 +1,5 @@
 from visualizador_login import VisualizadorLogin
 
 tela = VisualizadorLogin(None)
-tela.run()
+tela.construir()
 tela.get_root().mainloop()

@@ -11,19 +11,8 @@ class VisualizadorDiario(VisualizadorLeitura):
         self.controlador_audio = ControladorTextoAudio()
         self.controlador_diario.conectar()
         self.set_total_paginas(len(self.controlador_diario.get_diario()))
-    
-    def renderizar_tela(self, textbox=None, contador=None) -> None:
-        """Recarrega componentes da tela que podem ser alterados"""
-        for text_line in textbox:
-            text_line.delete(0, tk.END)
-        if textbox:
-            for line, text_line in zip(self.controlador_diario.ler_pagina(self.get_pagina_atual()).get_texto(), textbox):
-                text_line.insert(tk.END, line)
-        
-        if contador:
-            contador["text"] = f"Página {self.get_pagina_atual()+1} / {self.get_total_paginas()}"
-    
-    def run(self) -> None:
+
+    def construir(self) -> None:
         """Constroi a tela"""
         # Comandos dos botões
         def voltar_pagina(textbox, contador):
@@ -111,8 +100,19 @@ class VisualizadorDiario(VisualizadorLeitura):
                 text='Voltar',
                 font=('Calibri', '12'),
                 width=20,
-                command=self._parent.run
+                command=self._parent.construir
             ).pack()
 
         # Carrega a página pela primeira vez
         self.renderizar_tela(textbox, contador)
+
+    def renderizar_tela(self, textbox=None, contador=None) -> None:
+        """Recarrega componentes da tela que podem ser alterados"""
+        for text_line in textbox:
+            text_line.delete(0, tk.END)
+        if textbox:
+            for line, text_line in zip(self.controlador_diario.ler_pagina(self.get_pagina_atual()).get_texto(), textbox):
+                text_line.insert(tk.END, line)
+        
+        if contador:
+            contador["text"] = f"Página {self.get_pagina_atual()+1} / {self.get_total_paginas()}"

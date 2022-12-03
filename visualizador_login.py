@@ -13,9 +13,9 @@ class VisualizadorLogin(VisualizadorGerencia):
         # Associações
         self.controlador_login = ControladorLogin()
 
-    def run(self):
+    def construir(self):
         """Constrói a tela"""
-        self.clear(self._root)
+        self.limpar_tela()
         self._root.geometry("1280x720")
 
         self.controlador_login.conectar_banco()
@@ -51,7 +51,7 @@ class VisualizadorLogin(VisualizadorGerencia):
             text='Entrar',
             font=('Calibri', '12'),
             width=20,
-            command=lambda: self.login(nome.get(), senha.get())
+            command=lambda: self.fazer_login(nome.get(), senha.get())
         ).pack()
 
         tk.Button(
@@ -68,17 +68,17 @@ class VisualizadorLogin(VisualizadorGerencia):
                 text='Voltar',
                 font=('Calibri', '12'),
                 width=20,
-                command=self._parent.run
+                command=self._parent.construir
             ).pack()
 
-    def login(self, nome: str, senha: str) -> None:
+    def fazer_login(self, nome: str, senha: str) -> None:
         """Verifica se o usuário existe e se a senha está correta, caso esteja, abre o menu do usuário"""
         # Busca pelo usuário no banco de dados
         usuario = self.controlador_login.buscar_usuario_por_nome(nome)
 
         # Caso a busca por um usário não tenha retornado uma mensagem de erro
         if not isinstance(usuario, str):
-            salted_hash = self.hash_password(senha, usuario.get_salt())
+            salted_hash = self.hash_senha(senha, usuario.get_salt())
             if usuario.get_salted_hash() == salted_hash:
                 self.tela_menu(nome)
             else:
@@ -103,16 +103,16 @@ class VisualizadorLogin(VisualizadorGerencia):
 
     def tela_cadastro(self) -> None:
         """Contrói a tela de cadastro na janela atual, e um botão para voltar ao começo"""
-        self.clear(self._root)
-        VisualizadorCadastro(self, self._root).run()
+        self.limpar_tela()
+        VisualizadorCadastro(self, self._root).construir()
         
     def tela_menu(self, usuario) -> None:
         """Contrói a tela de menu na janela atual, e um botão para voltar ao começo"""
-        self.clear(self._root)
-        VisualizadorMenu(usuario, self, self._root).run()
+        self.limpar_tela()
+        VisualizadorMenu(usuario, self, self._root).construir()
 
 
 if __name__ == "__main__":
     a = VisualizadorLogin(None)
-    a.run()
+    a.construir()
     a.get_root().mainloop()

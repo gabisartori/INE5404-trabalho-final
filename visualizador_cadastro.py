@@ -11,9 +11,9 @@ class VisualizadorCadastro(VisualizadorGerencia):
         # Associações
         self.controlador = ControladorCadastro()
     
-    def run(self):
+    def construir(self):
         """Constrói a tela"""
-        self.clear(self._root)
+        self.limpar_tela()
         self._root.geometry("1280x720")
 
         tk.Label(
@@ -69,7 +69,7 @@ class VisualizadorCadastro(VisualizadorGerencia):
             text='Cadastrar',
             font=('Calibri', '12'),
             width=20,
-            command=lambda: self.faz_cadastro(nome.get(), senha.get(), confirma_senha.get())
+            command=lambda: self.fazer_cadastro(nome.get(), senha.get(), confirma_senha.get())
             ).pack()
 
         if self._parent:
@@ -78,14 +78,14 @@ class VisualizadorCadastro(VisualizadorGerencia):
                 text='Voltar',
                 font=('Calibri', '12'),
                 width=20,
-                command=self._parent.run
+                command=self._parent.construir
             ).pack()
 
-    def faz_cadastro(self, nome: str, senha: str, confirma: str) -> None:
+    def fazer_cadastro(self, nome: str, senha: str, confirma: str) -> None:
         """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
         if senha == confirma:
             sal = str(random.randint(1, 1_000_000))
-            self.controlador.cadastrar_usuario(nome, sal, self.hash_password(senha, sal))
+            self.controlador.cadastrar_usuario(nome, sal, self.hash_senha(senha, sal))
             
             confirmar = tk.Label(
                 self._root,

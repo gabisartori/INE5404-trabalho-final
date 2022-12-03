@@ -17,9 +17,9 @@ class VisualizadorMenu(VisualizadorGerencia):
         self.controlador_usuario = ControladorUsuario()
         self.controlador_usuario.conectar_banco()
 
-    def run(self):
+    def construir(self):
         """Constrói a tela"""
-        self.clear(self._root)
+        self.limpar_tela()
         self._root.geometry("1280x720")
         self._root.title("Menu")
         self.controlador_usuario.conectar_banco()
@@ -40,7 +40,7 @@ class VisualizadorMenu(VisualizadorGerencia):
         # Cria um botão com o nome de cada livro cadastrado no sistema
         for arquivo, titulo in self.controlador_livro.get_livros():
             def call_book(arquivo=arquivo):
-                return lambda: self.livro(arquivo)
+                return lambda: self.tela_livro(arquivo)
             
             tk.Button(
                 self._root,
@@ -52,7 +52,7 @@ class VisualizadorMenu(VisualizadorGerencia):
         tk.Button(
             self._root,
             text="Diário",
-            command=self.diario
+            command=self.tela_diario
         ).pack()
 
         tk.Label(
@@ -97,32 +97,32 @@ class VisualizadorMenu(VisualizadorGerencia):
                 text='Voltar',
                 font=('Calibri', '12'),
                 width=20,
-                command=self._parent.run
+                command=self._parent.construir
             ).pack()
 
-    def livro(self, livro: str) -> None:
+    def tela_livro(self, livro: str) -> None:
         """Abre o livro escolhido e cria um botão para voltar ao menu"""
-        self.clear(self._root)
+        self.limpar_tela()
         visualizador = VisualizadorLivro(livro, self, self._root)
-        visualizador.run()
+        visualizador.construir()
 
-    def diario(self) -> None:
+    def tela_diario(self) -> None:
         """Abre o diário do usuário e cria um botão para voltar ao menu"""
-        self.clear(self._root)
+        self.limpar_tela()
         visualizador = VisualizadorDiario(self.__usuario, self, self._root)
-        visualizador.run()
+        visualizador.construir()
 
     def salvar_alteracoes(self, nome: str, nova_senha: str, confirmar_senha: str) -> None:
         """Salva as alterações feitas no nome e na senha do usuário"""
         if nova_senha == confirmar_senha:
             usuario = self.controlador_usuario.buscar_usuario_por_nome(self.__usuario)
             if nova_senha: 
-                nova_senha = self.hash_password(nova_senha, usuario.get_salt())
+                nova_senha = self.hash_senha(nova_senha, usuario.get_salt())
             else:
                 nova_senha = usuario.get_salted_hash()
             self.controlador_usuario.atualizar_usuario(usuario.get_id(), nome, nova_senha)
             self.__usuario = nome
-            self.run()
+            self.construir()
         else:
             tk.Label(
                 self._root,
@@ -133,10 +133,10 @@ class VisualizadorMenu(VisualizadorGerencia):
     def remover_usuario(self, usuario: str) -> None:
         """Remove o usuário do sistema"""
         self.controlador_usuario.remover_usuario(usuario)
-        self._parent.run()
+        self._parent.construir()
 
 
 if __name__ == "__main__":
     a = VisualizadorMenu("gabriel", None)
-    a.run()
+    a.construir()
     a.get_root().mainloop()

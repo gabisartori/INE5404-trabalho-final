@@ -27,14 +27,14 @@ class Visualizador:
         aviso.pack()
         window.after(2000, aviso.destroy)
     
-    @staticmethod    
-    def clear(window) -> None:
+ 
+    def limpar_tela(self) -> None:
         """Remove todo o conteúdo de uma janela"""
-        for widget in window.winfo_children():
+        for widget in self._root.winfo_children():
             widget.destroy()
     
     @staticmethod
-    def update_texto(textbox: dict, new_text: str) -> None:
+    def atualizar_texto(textbox: dict, new_text: str) -> None:
         """Atualiza o item "text" de um dicionário"""
         textbox["text"] = new_text
 
@@ -44,7 +44,7 @@ class VisualizadorGerencia(Visualizador):
         super().__init__(parent, root)
     
     @staticmethod
-    def hash_password(password: str, salt: str):
+    def hash_senha(password: str, salt: str):
         return hashlib.sha256((password + salt).encode()).hexdigest()
 
 
@@ -79,7 +79,3 @@ class VisualizadorLeitura(Visualizador):
             self._pagina_atual += 1
             return True
         return False
-    
-    def editar_pagina(self, pagina: int, texto: str) -> None:
-        """\o/"""
-        print("Página do que?")

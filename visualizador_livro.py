@@ -13,14 +13,7 @@ class VisualizadorLivro(VisualizadorLeitura):
         self.controlador_audio = ControladorTextoAudio()
         self.set_total_paginas(len(self.controlador_livro.get_livro()))
 
-    def renderizar_tela(self, textbox=None, contador=None) -> None:
-        """Recarrega componentes da tela que podem ser alterados"""
-        if textbox:
-            textbox["text"] = self.controlador_livro.ler_pagina(self.get_pagina_atual()).get_texto()
-        if contador:
-            contador["text"] = f"Página {self.get_pagina_atual()+1} / {self.get_total_paginas()}"
-
-    def run(self) -> None:
+    def construir(self) -> None:
         """Constroi a tela e inicia o loop"""
         
         # Comandos dos botões
@@ -106,8 +99,12 @@ class VisualizadorLivro(VisualizadorLeitura):
                 text='Voltar',
                 font=('Calibri', '12'),
                 width=20,
-                command=self._parent.run
+                command=self._parent.construir
             ).pack()
 
-    def editar_pagina(self, pagina: int, texto: str) -> str:
-        return "Você não pode editar uma página de um livro"
+    def renderizar_tela(self, textbox=None, contador=None) -> None:
+            """Recarrega componentes da tela que podem ser alterados"""
+            if textbox:
+                textbox["text"] = self.controlador_livro.ler_pagina(self.get_pagina_atual()).get_texto()
+            if contador:
+                contador["text"] = f"Página {self.get_pagina_atual()+1} / {self.get_total_paginas()}"

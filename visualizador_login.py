@@ -78,8 +78,8 @@ class VisualizadorLogin(VisualizadorGerencia):
 
         # Caso a busca por um usário não tenha retornado uma mensagem de erro
         if not isinstance(usuario, str):
-            salted_hash = self.hash_senha(senha, usuario.get_salt())
-            if usuario.get_salted_hash() == salted_hash:
+            salted_hash = self.hash_senha(senha, usuario.get_sal())
+            if usuario.get_hash_salteada() == salted_hash:
                 self.tela_menu(nome)
             else:
                 confirmar = tk.Label(

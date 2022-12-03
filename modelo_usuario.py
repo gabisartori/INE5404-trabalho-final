@@ -1,9 +1,9 @@
 class Usuario:
-    def __init__(self, id: int, nome: str, salt: str, password_hash: str) -> None:
+    def __init__(self, id: int, nome: str, sal: str, hash_salteada: str) -> None:
         self.__id: int = id
         self.__nome: str = nome
-        self.__salt: str = salt
-        self.__salted_hash: str = password_hash
+        self.__sal: str = sal
+        self.__hash_salteada: str = hash_salteada
 
     def get_id(self) -> int:
         return self.__id
@@ -14,14 +14,14 @@ class Usuario:
     def set_nome(self, nome: str) -> None:
         self.__nome = nome
 
-    def get_salt(self) -> str:
-        return self.__salt
+    def get_sal(self) -> str:
+        return self.__sal
     
-    def set_salt(self, salt: str) -> None:
-        self.__salt = salt
+    def set_sal(self, sal: str) -> None:
+        self.__sal = sal
 
-    def get_salted_hash(self) -> str:
-        return self.__salted_hash
+    def get_hash_salteada(self) -> str:
+        return self.__hash_salteada
     
-    def set_salted_hash(self, salted_hash: str) -> None:
-        self.__salted_hash = salted_hash
+    def set_hash_salteada(self, hash_salteada: str) -> None:
+        self.__hash_salteada = hash_salteada

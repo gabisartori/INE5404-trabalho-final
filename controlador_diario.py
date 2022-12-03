@@ -10,25 +10,25 @@ class ControladorDiario:
     def conectar(self) -> None:
         """Carrega ou relê o diário do usuário"""
         try:
-            with open(f"diarios/{self.__usuario}.json") as file:
-                self.__diario = json.load(file)
+            with open(f"diarios/{self.__usuario}.json") as arquivo:
+                self.__diario = json.load(arquivo)
         except FileNotFoundError:
-            with open(f"diarios/{self.__usuario}.json", 'w') as file:
+            with open(f"diarios/{self.__usuario}.json", 'w') as arquivo:
                 # Cria um diário vazio
-                json.dump([{"numero": n, "texto": [""]*10} for n in range(10)], file)
+                json.dump([{"numero": n, "texto": [""]*10} for n in range(10)], arquivo)
             self.conectar()
 
     def salvar_pagina(self, id: int, linhas: list[str]) -> None:
         """Salva uma página no diário"""
 
-        with open(f"diarios/{self.__usuario}.json", 'r') as file:
-            coisa = json.load(file)
+        with open(f"diarios/{self.__usuario}.json", 'r') as arquivo:
+            coisa = json.load(arquivo)
 
-        with open(f"diarios/{self.__usuario}.json", 'w') as file:
+        with open(f"diarios/{self.__usuario}.json", 'w') as arquivo:
             for pagina in coisa:
                 if pagina['numero'] == id:
                     pagina['texto'] = linhas
-                    json.dump(coisa, file)
+                    json.dump(coisa, arquivo)
 
         # Recarregar o diário após novo conteúdo ser salvo
         self.conectar()

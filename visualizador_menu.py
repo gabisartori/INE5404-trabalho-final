@@ -117,9 +117,9 @@ class VisualizadorMenu(VisualizadorGerencia):
         if nova_senha == confirmar_senha:
             usuario = self.controlador_usuario.buscar_usuario_por_nome(self.__usuario)
             if nova_senha: 
-                nova_senha = self.hash_senha(nova_senha, usuario.get_salt())
+                nova_senha = self.hash_senha(nova_senha, usuario.get_sal())
             else:
-                nova_senha = usuario.get_salted_hash()
+                nova_senha = usuario.get_hash_salteada()
             self.controlador_usuario.atualizar_usuario(usuario.get_id(), nome, nova_senha)
             self.__usuario = nome
             self.construir()

@@ -9,8 +9,8 @@ class ControladorLivro:
     def conectar_livro(self, livro: str) -> None:
         """Carrega o conteúdo do livro"""
         try:
-            file = open("livros/" + livro + ".txt", "r")
-            conteudo = file.readlines()
+            arquivo = open("livros/" + livro + ".txt", "r")
+            conteudo = arquivo.readlines()
             paginas = []
             for linha in conteudo:
                 a = linha.split(';')
@@ -18,6 +18,7 @@ class ControladorLivro:
                 # numero;título do livro;conteúdo
                 paginas.append([a[0], a[1], ' '.join(a[2:])])
             self.__livro = paginas
+            arquivo.close()
         except FileNotFoundError:
             raise Exception("Livro não encontrado")
 

@@ -82,7 +82,7 @@ class VisualizadorLivro(VisualizadorLeitura):
         tk.Button(
             self._root,
             text="Ler",
-            command=lambda: ControladorTextoAudio().ler_texto(
+            command=lambda: self.controlador_audio.ler_texto(
                 self.controlador_livro.ler_pagina(self.get_pagina_atual()).get_texto()
             )
         ).pack(in_=botoes_controle_audio, side=tk.LEFT)
@@ -90,8 +90,16 @@ class VisualizadorLivro(VisualizadorLeitura):
         tk.Button(
             self._root,
             text="Parar",
-            command=lambda: ControladorTextoAudio().parar_leitura()
+            command=lambda: self.controlador_audio.parar_leitura()
         ).pack(in_=botoes_controle_audio, side=tk.RIGHT)
+
+        tk.Button(
+            self._root,
+            text="Idioma",
+            command= lambda: self.controlador_audio.set_idioma(
+                "pt-BR" if self.controlador_audio.get_idioma() == "en" else "en"
+                )
+        ).pack()
 
         if self._parent:
             tk.Button(

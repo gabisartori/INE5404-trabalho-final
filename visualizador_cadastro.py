@@ -83,6 +83,8 @@ class VisualizadorCadastro(VisualizadorGerencia):
 
     def fazer_cadastro(self, nome: str, senha: str, confirma: str) -> None:
         """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
+        if not nome or not senha or not confirma:
+            return
         if senha == confirma:
             sal = str(random.randint(1, 1_000_000))
             self.controlador.cadastrar_usuario(nome, sal, self.hash_senha(senha, sal))

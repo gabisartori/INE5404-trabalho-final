@@ -83,28 +83,21 @@ class VisualizadorCadastro(VisualizadorGerencia):
 
     def fazer_cadastro(self, nome: str, senha: str, confirma: str) -> None:
         """Verifica se o cadastro é válido e passa os valores para o controlador de cadastro"""
+        
+        # Verifica se os campos foram preenchidos corretamente
         if not nome or not senha or not confirma:
             self.aviso("Preencha todos os campos!")
-        elif senha == confirma:
-            sal = str(random.randint(1, 1_000_000))
-            self.controlador.cadastrar_usuario(nome, sal, self.hash_senha(senha, sal))
-            
-            confirmar = tk.Label(
-                self._root,
-                text='Cadastro concluído com sucesso!',
-                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                fg='green'
-                )
-            confirmar.pack()
-            self._root.after(2000, confirmar.destroy)
-
+            return
+        if senha != confirma:
+            self.aviso("As senhas devem ser iguais!")
+            return
+        
+        # Realiza o cadastro
+        sal = str(random.randint(1, 1_000_000))
+        cadastro = self.controlador.cadastrar_usuario(nome, sal, self.hash_senha(senha, sal))
+        
+        # Verifica se o cadastro foi bem sucedido
+        if isinstance(cadastro, str):
+            self.aviso(cadastro)
         else:
-            confirmar = tk.Label(
-                self._root,
-                text='As senhas devem ser iguais!',
-                font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                fg='red'
-            )
-            confirmar.pack()
-
-            self._root.after(2000, confirmar.destroy)
+            self.aviso("Cadastro realizado com sucesso!", "green")

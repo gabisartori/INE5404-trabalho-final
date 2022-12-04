@@ -20,9 +20,9 @@ class Visualizador:
     def set_root(self, root):
         self._root = root
 
-    def aviso(self, texto: str) -> None:
+    def aviso(self, texto: str, cor="red") -> None:
         """Exibe uma mensagem em vermelho no fim da tela"""
-        aviso = tk.Label(self._root, text=texto, fg="red", font=('Bahnschrift Light SemiCondensed', 15, 'bold'))
+        aviso = tk.Label(self._root, text=texto, fg=cor, font=('Bahnschrift Light SemiCondensed', 15, 'bold'))
         aviso.pack()
         self._root.after(2000, aviso.destroy)
     

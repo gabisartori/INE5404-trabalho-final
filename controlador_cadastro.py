@@ -17,6 +17,9 @@ class ControladorCadastro(ControladorUsuario):
 
     def cadastrar_usuario(self, nome: str, sal: str, hash_salteada: str) -> Usuario | str:
         """Recebe os dados do usuário, cria um objeto do tipo Usuario e o adiciona ao banco de dados"""
+        if not isinstance(self.buscar_usuario_por_nome(nome), str):
+            return "Já existe um usuário com esse nome"
+        
         usuario = Usuario(self.__contador_id, nome, sal, hash_salteada)
 
         # Incrementa o contador de id

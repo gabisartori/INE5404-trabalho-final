@@ -120,11 +120,11 @@ class VisualizadorMenu(VisualizadorGerencia):
                 nova_senha = self.hash_senha(nova_senha, usuario.get_sal())
             else:
                 nova_senha = usuario.get_hash_salteada()
-            a = self.controlador_usuario.atualizar_usuario(usuario.get_id(), nome, nova_senha)
-            if type(a) == str:
-                self.aviso(a)
+            atualizacao = self.controlador_usuario.atualizar_usuario(usuario.get_id(), nome, nova_senha)
             self.__usuario = nome
             self.construir()
+            if type(atualizacao) == str: 
+                self.aviso(atualizacao)
         else:
             self.aviso("As senhas devem ser iguais!")
 

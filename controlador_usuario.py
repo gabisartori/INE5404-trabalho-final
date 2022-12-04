@@ -29,12 +29,20 @@ class ControladorUsuario:
         return "Usuário não encontrado"
 
     def atualizar_usuario(self, id: int, novo_nome: str, nova_hash_salteada: str) -> Usuario | str:
+        # Verifica se o novo nome já está em uso
+        if not isinstance(self.buscar_usuario_por_nome(novo_nome), str):
+            # Verifica se o novo nome é o mesmo do usuário que está sendo atualizado
+            if self.buscar_usuario_por_nome(novo_nome).get_id() != id:
+                return "Já existe um usuário com esse nome"
+        
+        # Altera os dados do usuário
         usuario = [usr for usr in self.__usuarios if usr["id"] == id][0]
         if novo_nome:
             usuario["nome"] = novo_nome
         if nova_hash_salteada: 
             usuario["hash_salteada"] = nova_hash_salteada
 
+        # salvando as alterações no banco de dados
         with open(f"{self.__db}.json", 'w') as arquivo:
             json.dump(self.__usuarios, arquivo)
 

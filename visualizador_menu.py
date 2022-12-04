@@ -120,15 +120,13 @@ class VisualizadorMenu(VisualizadorGerencia):
                 nova_senha = self.hash_senha(nova_senha, usuario.get_sal())
             else:
                 nova_senha = usuario.get_hash_salteada()
-            self.controlador_usuario.atualizar_usuario(usuario.get_id(), nome, nova_senha)
+            a = self.controlador_usuario.atualizar_usuario(usuario.get_id(), nome, nova_senha)
+            if type(a) == str:
+                self.aviso(a)
             self.__usuario = nome
             self.construir()
         else:
-            tk.Label(
-                self._root,
-                text="As senhas não coincidem",
-                font=("Arial", 15)
-            ).pack()
+            self.aviso("As senhas devem ser iguais!")
 
     def remover_usuario(self, usuario: str) -> None:
         """Remove o usuário do sistema"""

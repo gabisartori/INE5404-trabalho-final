@@ -86,7 +86,7 @@ class VisualizadorLogin(VisualizadorGerencia):
                     self._root,
                     text='Senha incorreta!',
                     font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                    fg='green'
+                    fg='red'
                 )
                 confirmar.pack()
                 self._root.after(2000, confirmar.destroy)
@@ -96,7 +96,7 @@ class VisualizadorLogin(VisualizadorGerencia):
                 self._root,
                 text=usuario,
                 font=('Bahnschrift Light SemiCondensed', 15, 'bold'),
-                fg='green'
+                fg='red'
             )
             confirmar.pack()
             self._root.after(2000, confirmar.destroy)

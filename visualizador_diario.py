@@ -19,13 +19,13 @@ class VisualizadorDiario(VisualizadorLeitura):
             if self.pagina_anterior():
                 self.renderizar_tela(textbox, contador)
             else:
-                self.aviso(self._root, "Você está na primeira página")
+                self.aviso("Você está na primeira página")
 
         def avancar_pagina(textbox, contador):
             if self.pagina_seguinte(self.get_total_paginas()):
                 self.renderizar_tela(textbox, contador)
             else:
-                self.aviso(self._root, "Você está na última página")
+                self.aviso("Você está na última página")
     
         # Carrega a primeira página do diário
         pagina = self.controlador_diario.ler_pagina(self.get_pagina_atual())

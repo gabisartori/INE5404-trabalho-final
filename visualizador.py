@@ -20,12 +20,11 @@ class Visualizador:
     def set_root(self, root):
         self._root = root
 
-    @staticmethod
-    def aviso(window: tk.Tk, texto: str) -> None:
+    def aviso(self, texto: str) -> None:
         """Exibe uma mensagem em vermelho no fim da tela"""
-        aviso = tk.Label(window, text=texto, fg="red")
+        aviso = tk.Label(self._root, text=texto, fg="red", font=('Bahnschrift Light SemiCondensed', 15, 'bold'))
         aviso.pack()
-        window.after(2000, aviso.destroy)
+        self._root.after(2000, aviso.destroy)
     
  
     def limpar_tela(self) -> None:

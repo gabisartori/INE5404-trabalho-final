@@ -1,8 +1,8 @@
 import tkinter as tk
-from visualizador import VisualizadorGerencia
-from visualizador_cadastro import VisualizadorCadastro
-from visualizador_menu import VisualizadorMenu
-from controlador_login import ControladorLogin
+from view.visualizador import VisualizadorGerencia
+from view.visualizador_cadastro import VisualizadorCadastro
+from view.visualizador_menu import VisualizadorMenu
+from control.controlador_login import ControladorLogin
 
 
 class VisualizadorLogin(VisualizadorGerencia):

@@ -1,9 +1,9 @@
 import tkinter as tk
-from visualizador_livro import VisualizadorLivro
-from visualizador_diario import VisualizadorDiario
-from visualizador import VisualizadorGerencia
-from controlador_livro import ControladorLivro
-from controlador_usuario import ControladorUsuario
+from view.visualizador_livro import VisualizadorLivro
+from view.visualizador_diario import VisualizadorDiario
+from view.visualizador import VisualizadorGerencia
+from control.controlador_livro import ControladorLivro
+from control.controlador_usuario import ControladorUsuario
 
 
 class VisualizadorMenu(VisualizadorGerencia):

@@ -1,4 +1,4 @@
-from controlador_usuario import ControladorUsuario
+from control.controlador_usuario import ControladorUsuario
 
 
 class ControladorLogin(ControladorUsuario):

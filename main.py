@@ -1,4 +1,4 @@
-from visualizador_login import VisualizadorLogin
+from view.visualizador_login import VisualizadorLogin
 
 tela = VisualizadorLogin(None)
 tela.construir()

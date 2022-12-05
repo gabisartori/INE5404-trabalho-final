@@ -1,4 +1,4 @@
-from modelo_pagina import Pagina
+from model.modelo_pagina import Pagina
 import os
 
 

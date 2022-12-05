@@ -1,6 +1,6 @@
-from visualizador import VisualizadorLeitura
-from controlador_diario import ControladorDiario
-from controlador_texto_audio import ControladorTextoAudio
+from view.visualizador import VisualizadorLeitura
+from control.controlador_diario import ControladorDiario
+from control.controlador_texto_audio import ControladorTextoAudio
 import tkinter as tk
 
 

@@ -1,4 +1,4 @@
-from modelo_usuario import Usuario
+from model.modelo_usuario import Usuario
 import json
 
 

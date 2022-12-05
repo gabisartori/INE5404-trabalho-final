@@ -1,4 +1,4 @@
-from modelo_pagina import PaginaDiario
+from model.modelo_pagina import PaginaDiario
 import json
 
 

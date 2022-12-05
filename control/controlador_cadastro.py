@@ -1,5 +1,5 @@
-from modelo_usuario import Usuario
-from controlador_usuario import ControladorUsuario
+from model.modelo_usuario import Usuario
+from control.controlador_usuario import ControladorUsuario
 import json 
 
 

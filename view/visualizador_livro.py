@@ -1,8 +1,8 @@
 import tkinter as tk
 
-from visualizador import VisualizadorLeitura
-from controlador_livro import ControladorLivro
-from controlador_texto_audio import ControladorTextoAudio
+from view.visualizador import VisualizadorLeitura
+from control.controlador_livro import ControladorLivro
+from control.controlador_texto_audio import ControladorTextoAudio
 
 
 class VisualizadorLivro(VisualizadorLeitura):

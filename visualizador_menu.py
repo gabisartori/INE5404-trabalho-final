@@ -29,12 +29,22 @@ class VisualizadorMenu(VisualizadorGerencia):
             text="Menu",
             font=("Arial", 20)
         ).pack()
+        
+        frame_aux_0 = tk.Frame(self._root)
+        frame_aux_0.pack()
+       
+        frame_aux_1 = tk.Frame(frame_aux_0)
+        frame_aux_1.pack(side=tk.LEFT)
+        
+        frame_aux_2 = tk.Frame(frame_aux_0)
+        frame_aux_2.pack(side=tk.RIGHT)        
+        
 
         tk.Label(
             self._root,
             text="Escolha um livro",
             font=("Arial", 15)
-        ).pack()
+        ).pack(in_=frame_aux_1)
         
         # Livros
         # Cria um botão com o nome de cada livro cadastrado no sistema
@@ -47,49 +57,56 @@ class VisualizadorMenu(VisualizadorGerencia):
                 text=titulo,
                 command=call_book(),
                 width=25
-            ).pack()
+            ).pack(in_=frame_aux_1)
 
         tk.Button(
             self._root,
             text="Diário",
             command=self.tela_diario
-        ).pack()
+        ).pack(in_=frame_aux_1)
+
+        tk.Label(
+            self._root,
+            text="Informações do usuário",
+            font=("Arial", 15)
+        ).pack(in_=frame_aux_2)
+
 
         tk.Label(
             self._root,
             text="Nome do usuário",
             font=("Arial", 15)
-        ).pack()
+        ).pack(in_=frame_aux_2)
         nome = tk.Entry(
             self._root,
             width=25
         )
-        nome.pack()
+        nome.pack(in_=frame_aux_2)
         nome.insert(0, self.__usuario)
 
         nova_senha = tk.Entry(
             self._root,
             width=25
         )
-        nova_senha.pack()
+        nova_senha.pack(in_=frame_aux_2)
 
         confirmar_senha = tk.Entry(
             self._root,
             width=25
         )
-        confirmar_senha.pack()
+        confirmar_senha.pack(in_=frame_aux_2)
 
         tk.Button(
             self._root,
             text="Salvar alterações",
             command=lambda: self.salvar_alteracoes(nome.get(), nova_senha.get(), confirmar_senha.get())
-        ).pack()
+        ).pack(in_=frame_aux_2)
 
         tk.Button(
             self._root,
             text="Deletar conta",
             command=lambda: self.remover_usuario(self.__usuario)
-        ).pack()
+        ).pack(in_=frame_aux_2)
 
         if self._parent:
             tk.Button(
